@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { ReactNode } from 'react'
 import CompassViz from './CompassViz'
 import AxesViz from './AxesViz'
+import ArchetypeIcon from './ArchetypeIcon'
 import {
   partyProximity,
   partyPositions,
@@ -9,7 +10,6 @@ import {
   matchArchetypes,
   neoValuesArchetypes,
   twelveAxesConfig,
-  neoValuesConfig,
 } from './data'
 import type { AxisConfig } from './data'
 
@@ -265,107 +265,102 @@ function TwelveAxesResult({ scores }: { scores: Record<string, number> }) {
 
 function NeoValuesResult({ scores }: { scores: Record<string, number> }) {
   const { ranked, best, isExactMatch } = matchArchetypes(scores, neoValuesArchetypes)
-  const [selected, setSelected] = useState<string | null>(isExactMatch ? best.name : null)
+  const closest6 = ranked.slice(0, 6)
+  const [selected, setSelected] = useState<string | null>(best.name)
   const selectedArchetype = ranked.find((a) => a.name === selected)
 
   return (
-    <div className="flex flex-col gap-10">
-      <div className="max-w-2xl">
-        <SectionLabel>Your result — NeoValues</SectionLabel>
-        <div className="mb-8">
-          <ResultHeading label="5 axes mapped" />
-        </div>
-        <AxesViz scores={scores} axes={neoValuesConfig} />
+    <div className="max-w-3xl">
+      <SectionLabel>Your closest political identities</SectionLabel>
+      <div className="mb-2">
+        <ResultHeading label="NeoValues result" />
       </div>
+      <p style={{ fontFamily: 'var(--font-serif)', fontSize: '0.875rem', color: 'var(--muted-foreground)', marginBottom: '2rem' }}>
+        Based on your answers, here are the 6 political identities your beliefs land closest to.
+      </p>
 
-      {/* Archetype identity match */}
-      <div>
-        <SectionLabel>Closest political identity</SectionLabel>
-
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 mb-6">
-          {ranked.map((a, i) => {
-            const isBest = i === 0
-            const isChosen = selected === a.name
-            return (
-              <button
-                key={a.name}
-                onClick={() => setSelected(a.name)}
-                className="flex flex-col items-center gap-2 py-3"
+      <div className="grid grid-cols-3 sm:grid-cols-6 gap-4 mb-7">
+        {closest6.map((a) => {
+          const isChosen = selected === a.name
+          const isBest = a.name === best.name
+          return (
+            <button
+              key={a.name}
+              onClick={() => setSelected(a.name)}
+              className="flex flex-col items-center gap-2"
+            >
+              <div
+                className="rounded-full flex-shrink-0"
                 style={{
-                  opacity: isBest || isChosen ? 1 : 0.45,
-                  transition: 'opacity 0.2s',
+                  boxShadow: isChosen ? `0 0 0 2px var(--background), 0 0 0 4px ${a.color}` : isBest ? `0 0 0 2px var(--background), 0 0 0 4px var(--border)` : 'none',
+                  borderRadius: '9999px',
                 }}
               >
-                <div
-                  className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{
-                    backgroundColor: a.color,
-                    border: isChosen ? '2px solid var(--foreground)' : '2px solid transparent',
-                  }}
-                >
-                  <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '0.7rem', color: '#0A0B0C' }}>
-                    {a.abbrev}
-                  </span>
-                </div>
-                <span
-                  className="text-center leading-tight"
-                  style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', letterSpacing: '0.02em', color: 'var(--muted-foreground)' }}
-                >
-                  {a.name}
-                </span>
-              </button>
-            )
-          })}
-        </div>
+                <ArchetypeIcon icon={a.icon} color={a.color} />
+              </div>
+              <span
+                className="text-center leading-tight"
+                style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.7rem', color: isChosen ? 'var(--foreground)' : 'var(--muted-foreground)' }}
+              >
+                {a.name}
+              </span>
+            </button>
+          )
+        })}
+      </div>
 
-        <div className="flex flex-wrap items-center gap-3 mb-6">
+      <div className="flex flex-wrap items-center gap-3 mb-6">
+        <span
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontWeight: 800,
+            fontSize: '1.1rem',
+            padding: '6px 16px',
+            backgroundColor: isExactMatch ? 'var(--primary)' : 'var(--secondary)',
+            color: isExactMatch ? 'var(--primary-foreground)' : 'var(--muted-foreground)',
+          }}
+        >
+          {isExactMatch ? `Match: ${best.name}` : 'No exact match'}
+        </span>
+        {!isExactMatch && (
           <span
             style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 800,
-              fontSize: '1.1rem',
-              padding: '6px 16px',
-              backgroundColor: isExactMatch ? 'var(--primary)' : 'var(--secondary)',
-              color: isExactMatch ? 'var(--primary-foreground)' : 'var(--muted-foreground)',
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.75rem',
+              padding: '5px 14px',
+              border: `1px solid ${best.color}`,
+              color: best.color,
             }}
           >
-            {isExactMatch ? `Match: ${best.name}` : 'No exact match'}
+            Next closest match: {best.name}
           </span>
-          {!isExactMatch && (
-            <span
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.75rem',
-                padding: '5px 14px',
-                border: `1px solid ${best.color}`,
-                color: best.color,
-              }}
-            >
-              Next closest match: {best.name}
-            </span>
-          )}
-        </div>
+        )}
+      </div>
 
-        <p style={{ fontFamily: 'var(--font-serif)', fontSize: '0.8rem', fontStyle: 'italic', color: 'var(--muted-foreground)', marginBottom: '1.25rem' }}>
-          Click any badge to read its description.
-        </p>
+      <p style={{ fontFamily: 'var(--font-serif)', fontSize: '0.8rem', fontStyle: 'italic', color: 'var(--muted-foreground)', marginBottom: '1.25rem' }}>
+        Click any icon or name above to read its description.
+      </p>
 
-        {selectedArchetype && (
-          <div className="p-5" style={{ borderLeft: `3px solid ${selectedArchetype.color}`, backgroundColor: 'var(--secondary)' }}>
-            <div className="flex items-baseline gap-3 mb-2">
+      {selectedArchetype && (
+        <div className="p-5 flex gap-4 items-start" style={{ borderLeft: `3px solid ${selectedArchetype.color}`, backgroundColor: 'var(--secondary)' }}>
+          <div className="flex-shrink-0 mt-0.5">
+            <ArchetypeIcon icon={selectedArchetype.icon} color={selectedArchetype.color} size={36} />
+          </div>
+          <div>
+            <div className="flex items-baseline gap-3 mb-2 flex-wrap">
               <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.1rem', color: selectedArchetype.color }}>
                 {selectedArchetype.name}
               </span>
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--muted-foreground)' }}>
-                {selectedArchetype.similarity}% similarity
+                {selectedArchetype.similarity}% similarity to your answers
               </span>
             </div>
             <p style={{ fontFamily: 'var(--font-serif)', fontSize: '0.875rem', lineHeight: 1.6, color: 'var(--secondary-foreground)' }}>
               {selectedArchetype.description}
             </p>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }
