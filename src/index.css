@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import 'tailwindcss';
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --radius-DEFAULT: var(--radius);
+  --font-display: var(--font-display);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+}
+
+:root {
+  --background: #0A0B0C;
+  --foreground: #F0EDE8;
+  --card: #111315;
+  --card-foreground: #F0EDE8;
+  --primary: #C41E3A;
+  --primary-foreground: #F0EDE8;
+  --secondary: #1A1C1E;
+  --secondary-foreground: #A09890;
+  --muted: #1A1C1E;
+  --muted-foreground: #706860;
+  --accent: #C41E3A;
+  --accent-foreground: #F0EDE8;
+  --border: #2A2825;
+  --ring: #C41E3A;
+  --radius: 0px;
+
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-serif: 'Source Serif 4', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  font-family: var(--font-serif);
+  background-color: var(--background);
+  color: var(--foreground);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(196, 30, 58, 0.09), transparent),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 3px);
+  background-attachment: fixed;
+}
+
+/* Hide scrollbar */
+::-webkit-scrollbar { width: 0; height: 0; }
+* { scrollbar-width: none; }
+
+/* Selection color matches the brand accent */
+::selection {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* Visible, on-brand keyboard focus ring for accessibility */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+}
