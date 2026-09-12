@@ -1,6 +1,6 @@
 # Political Compass Hub
 
-A single site with four political self-assessment tests — Political Compass, Vote Compass, 12 Axes, and NeoValues — each scored client-side and matched against a database of 12 political parties, 40 ideological traditions, and 30 NeoValues archetypes. Nothing is sent to a server; every test runs entirely in the browser.
+A single site with five political and philosophical self-assessment tests — Political Compass, Vote Compass, 12 Axes, NeoValues, and PhiloSorter — each scored (or branched) client-side against a database of 12 political parties, 47 ideological traditions, 36 NeoValues archetypes, and 96 philosophical schools. Nothing is sent to a server; every test runs entirely in the browser.
 
 Built with React 19, TypeScript, Vite, and Tailwind CSS 4.
 
@@ -89,6 +89,10 @@ src/CompassViz.tsx     2D political-compass SVG visualization
 src/AxesViz.tsx        Multi-axis bar visualization (12 Axes / NeoValues)
 src/data.ts            Questions, scoring, party + ideology databases
 src/index.css          Theme tokens (colors/fonts) + global styles
+src/PhilosorterRunner.tsx    PhiloSorter: branching flowchart quiz (home → quiz → result / browse)
+src/PhilosorterEmblem.tsx    Generative SVG "emblem" for each philosophical school
+src/philosorterPhilosophies.ts  The 96 philosophical schools (quote, thinker, blurb, colors)
+src/philosorterQuiz.ts        The branching question tree PhiloSorter walks through
 ```
 
 ## Adding or editing content
@@ -96,4 +100,6 @@ src/index.css          Theme tokens (colors/fonts) + global styles
 - **Questions & scoring:** edit the arrays in `src/data.ts` (`politicalCompassQuestions`, `voteCompassQuestions`, `twelveAxesQuestions`, `neoValuesQuestions`). Each question maps to one or more `axes` keys with a weight from -2 to 2.
 - **Parties:** edit `partyPositions` in `src/data.ts` — used by the Vote Compass test.
 - **Ideology database:** edit `ideologyPositions` in `src/data.ts` — used to find the closest ideological match on the Political Compass test.
+- **NeoValues archetypes:** edit `neoValuesArchetypes` in `src/data.ts` — each has a 5-axis target vector, a color, and a `lucide-react` icon key (see `ArchetypeIcon.tsx`).
+- **PhiloSorter schools/questions:** edit `philosophies` in `src/philosorterPhilosophies.ts` and the question tree in `src/philosorterQuiz.ts` — each `r:<name>` leaf in the question tree must match a key in `philosophies` exactly.
 - **New test:** add an entry to `TESTS` in `src/data.ts`, a question array, and wire it up in `getQuestions()` in `src/App.tsx`.

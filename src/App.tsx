@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import TestRunner from './TestRunner'
 import Results from './Results'
+import PhilosorterRunner from './PhilosorterRunner'
 import {
   politicalCompassQuestions,
   voteCompassQuestions,
@@ -140,6 +141,10 @@ export default function App() {
 
   const activeTest = TESTS.find((t) => t.id === activeTestId)
 
+  if (screen === 'test' && activeTestId === 'philosorter') {
+    return <PhilosorterRunner onHome={() => setScreen('home')} />
+  }
+
   if (screen === 'test' && activeTestId) {
     return (
       <TestRunner
@@ -202,7 +207,7 @@ export default function App() {
                   lineHeight: 1.65,
                 }}
               >
-                Answer questions honestly. See where you fall on the ideological map. Compare yourself to parties and a database of 40 political ideologies.
+                Answer questions honestly. See where you fall on the ideological map. Compare yourself to parties and a database of 47 political ideologies.
               </p>
               <div
                 className="mt-3"

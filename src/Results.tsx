@@ -17,7 +17,7 @@ interface Props {
   testId: string
   testName: string
   scores: Record<string, number>
-  resultType: 'compass' | 'axes' | 'vote-compass'
+  resultType: 'compass' | 'axes' | 'vote-compass' | 'branching'
   onRetake: () => void
   onHome: () => void
 }

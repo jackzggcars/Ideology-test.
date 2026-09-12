@@ -1,7 +1,7 @@
 import {
   Coins, Users, Crown, Triangle, ShoppingBag, Sprout, LandPlot, Rocket,
   ShieldAlert, TreePine, Building2, Cpu, Umbrella, HandCoins, Trees, Dna,
-  Mountain, TrendingUp, type LucideIcon,
+  Mountain, TrendingUp, Scale, type LucideIcon,
 } from 'lucide-react'
 import type { ArchetypeIconKey } from './data'
 
@@ -24,6 +24,7 @@ const ICONS: Partial<Record<ArchetypeIconKey, LucideIcon>> = {
   dna: Dna,
   mountain: Mountain,
   'trending-up': TrendingUp,
+  scale: Scale,
 }
 
 interface Props {

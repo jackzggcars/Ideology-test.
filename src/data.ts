@@ -165,14 +165,21 @@ export const ideologyPositions: Ideology[] = [
   { name: 'National Liberalism', abbrev: 'N-LIB', x: 3, y: 1.5, color: '#D97706', family: 'Center-Right', description: 'Pairs support for free markets and civil liberties with an emphasis on national identity and sovereignty.' },
   { name: 'Distributism', abbrev: 'DIST', x: -1, y: 2.5, color: '#78350F', family: 'Center', description: 'Favors widely distributed private property (small farms, family businesses) over both large-scale capitalism and state socialism.' },
   { name: 'Peronism', abbrev: 'PER', x: -2, y: 3.5, color: '#1D4ED8', family: 'Center (Populist)', description: 'A populist, nationalist movement blending strong labor protections and social welfare with a corporatist, personality-driven style of politics.' },
+  { name: 'Civic Republicanism', abbrev: 'C-REP', x: -0.5, y: 1, color: '#334155', family: 'Center', description: 'Defines freedom as the absence of domination rather than mere non-interference, relying on mixed institutions and an actively engaged citizenry to keep power answerable.' },
+  { name: 'Rawlsian Liberalism', abbrev: 'RAWLS', x: -3, y: -1.5, color: '#3B82F6', family: 'Center-Left', description: 'Asks what rules we would choose from behind a "veil of ignorance," not knowing our place in society — prioritizing equal basic liberties, then arranging inequality only to benefit the worst-off.' },
+  { name: 'Marxism', abbrev: 'MARX', x: -7, y: 3, color: '#7F1D1D', family: 'Left', description: 'Analyzes history as a sequence of class struggles driven by control of the means of production, and calls for abolishing the conditions that make exploitation profitable.' },
   { name: 'Conservatism', abbrev: 'CONS', x: 3, y: 3, color: '#B91C1C', family: 'Right', description: 'Emphasizes gradual change, established institutions, tradition, and social order over rapid reform.' },
   { name: 'Minarchism', abbrev: 'MIN', x: 6, y: -4, color: '#F59E0B', family: 'Right-Libertarian', description: 'Would limit government to a small set of core functions — courts, police, and defense — leaving everything else to private and voluntary action.' },
   { name: 'Neoconservatism', abbrev: 'NEO-C', x: 4, y: 3.5, color: '#DC2626', family: 'Right', description: 'Combines an assertive, interventionist foreign policy with support for free markets and traditional social values.' },
   { name: 'National Conservatism', abbrev: 'N-CON', x: 5, y: 4.5, color: '#EA580C', family: 'Right', description: 'Emphasizes national sovereignty, cultural cohesion, and restricting immigration alongside traditional social values.' },
   { name: 'Paleoconservatism', abbrev: 'PALEO', x: 5.5, y: 4, color: '#C2410C', family: 'Right', description: 'Stresses traditionalism, decentralization, and skepticism of immigration, foreign intervention, and globalization.' },
   { name: 'Integralism', abbrev: 'INT', x: 2, y: 7, color: '#581C87', family: 'Right (Authoritarian)', description: 'Holds that political authority should be actively organized around and subordinate to religious doctrine, rejecting a strict separation of church and state.' },
+  { name: 'Traditionalism', abbrev: 'TRAD', x: 1.5, y: 7.5, color: '#44403C', family: 'Right (Authoritarian)', description: 'Holds that a perennial sacred order underlies the great religious traditions and that modernity is a civilizational inversion of it — restoration is metaphysical before it is political.' },
+  { name: 'Hobbesian Absolutism', abbrev: 'HOBB', x: 1, y: 9, color: '#3F3F46', family: 'Far Right (Authoritarian)', description: 'Holds that without an undivided sovereign, life descends into a war of all against all — so subjects trade obedience for security through absolute, unchallengeable authority.' },
+  { name: 'Burkean Conservatism', abbrev: 'BURKE', x: 3.5, y: 2.5, color: '#92400E', family: 'Right', description: 'Trusts inherited institutions over any planner\u2019s blueprint, favoring gradual reform, continuity between generations, and deep distrust of sweeping abstraction.' },
   { name: 'Right-Libertarianism', abbrev: 'R-LIB', x: 7, y: -6.5, color: '#EAB308', family: 'Right-Libertarian', description: 'Advocates minimal government limited to protecting property rights and enforcing contracts, with maximum market freedom.' },
   { name: 'Agorism', abbrev: 'AGO', x: 8.5, y: -8, color: '#CA8A04', family: 'Far Right-Libertarian', description: 'Pursues a stateless free market by building untaxed, unregulated "counter-economic" trade rather than through political reform.' },
+  { name: 'Hoppeanism', abbrev: 'HOPPE', x: 8.5, y: -5, color: '#D97706', family: 'Far Right-Libertarian', description: 'Argues that the very act of reasoned argument presupposes self-ownership, treats democracy as a decivilizing auction of borrowed power, and would replace the state with covenant communities.' },
   { name: 'Anarcho-Capitalism', abbrev: 'A-CAP', x: 9.5, y: -9, color: '#CA8A04', family: 'Far Right-Libertarian', description: 'Would replace the state entirely with private markets and voluntary contracts, including for law and security.' },
   { name: 'Fascism', abbrev: 'FASC', x: 6.5, y: 9, color: '#1F2937', family: 'Far Right (Authoritarian)', description: 'A historical authoritarian ultranationalist movement subordinating the individual to the state and prioritizing national unity by force.' },
   { name: 'Theocracy', abbrev: 'THEO', x: 2, y: 8.5, color: '#4C1D95', family: 'Far Right (Authoritarian)', description: 'Places religious law and clerical authority at the center of governance, with limited separation between church and state.' },
@@ -316,7 +323,7 @@ export type ArchetypeIconKey =
   | 'coins' | 'users' | 'crown' | 'triangle' | 'shopping-bag' | 'circle-split'
   | 'cross-shield' | 'sprout' | 'land-plot' | 'rocket' | 'shield-alert'
   | 'tree-pine' | 'building-2' | 'cpu' | 'umbrella' | 'hand-coins' | 'trees'
-  | 'dna' | 'mountain' | 'trending-up'
+  | 'dna' | 'mountain' | 'trending-up' | 'scale'
 
 export interface NeoValuesArchetype {
   name: string
@@ -358,6 +365,12 @@ export const neoValuesArchetypes: NeoValuesArchetype[] = [
   { name: 'National Liberalism', abbrev: 'NLB', color: '#D97706', icon: 'trending-up', vector: { economic: 3, civil: 2, diplomatic: 2, environment: -1, technology: 2 }, description: 'Pairs support for free markets and civil liberties with an emphasis on national identity and sovereignty.' },
   { name: 'Mutualism', abbrev: 'MUT', color: '#BE185D', icon: 'hand-coins', vector: { economic: -4, civil: -7, diplomatic: -2, environment: 1, technology: 0 }, description: 'A market-based socialism in which workers own their own tools and trade freely, with capital access organized through mutual credit rather than profit-seeking finance.' },
   { name: 'Minarchism', abbrev: 'MIN', color: '#F59E0B', icon: 'land-plot', vector: { economic: 6, civil: -5, diplomatic: 0, environment: -1, technology: 2 }, description: 'Would limit government to a small set of core functions — courts, police, and defense — leaving everything else to private and voluntary action.' },
+  { name: 'Rawlsian Liberalism', abbrev: 'RAW', color: '#3B82F6', icon: 'scale', vector: { economic: -3, civil: -2, diplomatic: -1, environment: 1, technology: 1 }, description: 'Asks what rules we would choose from behind a "veil of ignorance," not knowing our place in society — equal basic liberties first, inequality only if it helps the worst-off.' },
+  { name: 'Hoppeanism', abbrev: 'HOP', color: '#D97706', icon: 'coins', vector: { economic: 8, civil: -6, diplomatic: -3, environment: -1, technology: 1 }, description: 'Treats democracy as a decivilizing auction of borrowed power and would replace the state with covenant communities bound by private law.' },
+  { name: 'Civic Republicanism', abbrev: 'CR', color: '#334155', icon: 'building-2', vector: { economic: -1, civil: 1, diplomatic: 0, environment: 0, technology: -1 }, description: 'Defines freedom as the absence of domination, not mere non-interference, and relies on mixed institutions and civic participation to keep power answerable.' },
+  { name: 'Hobbesian Absolutism', abbrev: 'HA', color: '#3F3F46', icon: 'crown', vector: { economic: 0, civil: 7, diplomatic: 3, environment: -1, technology: -2 }, description: 'Holds that only an undivided sovereign can prevent a war of all against all — subjects trade obedience for security through absolute authority.' },
+  { name: 'Traditionalism', abbrev: 'TRD', color: '#44403C', icon: 'mountain', vector: { economic: 0, civil: 6, diplomatic: -2, environment: 1, technology: -6 }, description: 'Holds that a perennial sacred order underlies the great religious traditions, and that modernity is a civilizational inversion of it.' },
+  { name: 'Marxism', abbrev: 'MRX', color: '#7F1D1D', icon: 'users', vector: { economic: -7, civil: 2, diplomatic: -2, environment: 0, technology: 0 }, description: 'Analyzes history as a sequence of class struggles over control of production, and calls for abolishing the conditions that make exploitation profitable.' },
 ]
 
 const NEOVALUES_AXIS_KEYS = ['economic', 'civil', 'diplomatic', 'environment', 'technology'] as const
@@ -431,7 +444,7 @@ export const TESTS = [
     tag: 'Foundational',
     questions: 30,
     duration: '~14 min',
-    description: 'The classic two-axis model, now with finer-grained questions for sharper resolution. Plots your economic position (left to right) against your stance on authority (libertarian to authoritarian), then matches you to the closest of 40 political ideologies.',
+    description: 'The classic two-axis model, now with finer-grained questions for sharper resolution. Plots your economic position (left to right) against your stance on authority (libertarian to authoritarian), then matches you to the closest of 47 political ideologies.',
     resultType: 'compass' as const,
   },
   {
@@ -461,7 +474,17 @@ export const TESTS = [
     tag: 'Modern',
     questions: 20,
     duration: '~12 min',
-    description: 'A five-axis model built for contemporary politics. Covers economic philosophy, civil liberties, diplomacy, environmental stance, and attitudes toward technology — then matches you to the closest of 30 specific political identities, from Agorism to Technocracy.',
+    description: 'A five-axis model built for contemporary politics. Covers economic philosophy, civil liberties, diplomacy, environmental stance, and attitudes toward technology — then matches you to the closest of 36 specific political identities, from Agorism to Technocracy.',
     resultType: 'axes' as const,
+  },
+  {
+    id: 'philosorter',
+    name: 'PhiloSorter',
+    abbrev: 'PS',
+    tag: 'Branching',
+    questions: 6,
+    duration: '~3 min',
+    description: 'Not a scored test — a branching flowchart. A handful of yes/no and either/or questions about reality, knowledge, ethics, and legitimate authority sort you into one of 96 philosophical schools, from Platonism to Hoppeanism.',
+    resultType: 'branching' as const,
   },
 ]
