@@ -93,12 +93,11 @@ function TestCard({
           <div
             style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: '0.55rem',
-              letterSpacing: '0.12em',
-              padding: '3px 7px',
-              border: '1px solid var(--primary)',
+              fontSize: '0.6rem',
+              letterSpacing: '0.1em',
               color: 'var(--primary)',
               flexShrink: 0,
+              paddingTop: '2px',
             }}
           >
             {test.tag}

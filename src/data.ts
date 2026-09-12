@@ -1,5 +1,38 @@
 export type Response = -2 | -1 | 0 | 1 | 2
 
+// Names of lucide-react icons used to represent each pole of an axis.
+// Kept as plain strings here so this data file has no React/UI dependency;
+// AxesViz.tsx maps these to actual icon components.
+export type IconKey =
+  | 'landmark'
+  | 'store'
+  | 'users'
+  | 'briefcase'
+  | 'globe'
+  | 'flag'
+  | 'atom'
+  | 'church'
+  | 'flame'
+  | 'shield'
+  | 'sparkles'
+  | 'scroll-text'
+  | 'heart-handshake'
+  | 'swords'
+  | 'palette'
+  | 'user-check'
+  | 'map-pin'
+  | 'building-2'
+  | 'leaf'
+  | 'factory'
+  | 'rotate-cw'
+  | 'zap'
+  | 'home'
+  | 'scale'
+  | 'trending-up'
+  | 'unlock'
+  | 'cpu'
+  | 'shield-alert'
+
 export interface Question {
   id: string
   text: string
@@ -8,8 +41,12 @@ export interface Question {
 
 export interface AxisConfig {
   key: string
+  categoryName: string // e.g. "Economy" — the category this axis belongs to
   leftLabel: string
   rightLabel: string
+  centerLabel: string // label shown when the score is close to neutral
+  leftIcon: IconKey
+  rightIcon: IconKey
   leftColor: string
   rightColor: string
 }
@@ -195,18 +232,18 @@ export const twelveAxesQuestions: Question[] = [
 ]
 
 export const twelveAxesConfig: AxisConfig[] = [
-  { key: 'stateMkt', leftLabel: 'State', rightLabel: 'Market', leftColor: '#EF4444', rightColor: '#3B82F6' },
-  { key: 'commCap', leftLabel: 'Communist', rightLabel: 'Capitalist', leftColor: '#DC2626', rightColor: '#2563EB' },
-  { key: 'globNat', leftLabel: 'Globalist', rightLabel: 'Nationalist', leftColor: '#8B5CF6', rightColor: '#D97706' },
-  { key: 'secRel', leftLabel: 'Secular', rightLabel: 'Religious', leftColor: '#6366F1', rightColor: '#F59E0B' },
-  { key: 'anarAuth', leftLabel: 'Anarchist', rightLabel: 'Authoritarian', leftColor: '#10B981', rightColor: '#7C3AED' },
-  { key: 'progCons', leftLabel: 'Progressive', rightLabel: 'Conservative', leftColor: '#06B6D4', rightColor: '#B45309' },
-  { key: 'pacMil', leftLabel: 'Pacifist', rightLabel: 'Militarist', leftColor: '#84CC16', rightColor: '#DC2626' },
-  { key: 'multiAssim', leftLabel: 'Multiculturalist', rightLabel: 'Assimilationist', leftColor: '#F472B6', rightColor: '#78716C' },
-  { key: 'decentCent', leftLabel: 'Decentralist', rightLabel: 'Centralist', leftColor: '#FB923C', rightColor: '#4B5563' },
-  { key: 'envInd', leftLabel: 'Environmentalist', rightLabel: 'Industrialist', leftColor: '#22C55E', rightColor: '#92400E' },
-  { key: 'refRev', leftLabel: 'Revolutionary', rightLabel: 'Reformist', leftColor: '#EF4444', rightColor: '#6B7280' },
-  { key: 'intlIsol', leftLabel: 'Internationalist', rightLabel: 'Isolationist', leftColor: '#3B82F6', rightColor: '#B91C1C' },
+  { key: 'stateMkt', categoryName: 'Economy', leftLabel: 'State', rightLabel: 'Market', centerLabel: 'Mixed Economy', leftIcon: 'landmark', rightIcon: 'store', leftColor: '#EF4444', rightColor: '#3B82F6' },
+  { key: 'commCap', categoryName: 'Ownership', leftLabel: 'Communist', rightLabel: 'Capitalist', centerLabel: 'Cooperative', leftIcon: 'users', rightIcon: 'briefcase', leftColor: '#DC2626', rightColor: '#2563EB' },
+  { key: 'globNat', categoryName: 'Foreign Outlook', leftLabel: 'Globalist', rightLabel: 'Nationalist', centerLabel: 'Balanced', leftIcon: 'globe', rightIcon: 'flag', leftColor: '#8B5CF6', rightColor: '#D97706' },
+  { key: 'secRel', categoryName: 'Religion', leftLabel: 'Secular', rightLabel: 'Religious', centerLabel: 'Agnostic', leftIcon: 'atom', rightIcon: 'church', leftColor: '#6366F1', rightColor: '#F59E0B' },
+  { key: 'anarAuth', categoryName: 'Power', leftLabel: 'Anarchist', rightLabel: 'Authoritarian', centerLabel: 'Limited Government', leftIcon: 'flame', rightIcon: 'shield', leftColor: '#10B981', rightColor: '#7C3AED' },
+  { key: 'progCons', categoryName: 'Culture', leftLabel: 'Progressive', rightLabel: 'Conservative', centerLabel: 'Moderate', leftIcon: 'sparkles', rightIcon: 'scroll-text', leftColor: '#06B6D4', rightColor: '#B45309' },
+  { key: 'pacMil', categoryName: 'Diplomacy', leftLabel: 'Pacifist', rightLabel: 'Militarist', centerLabel: 'Pragmatic', leftIcon: 'heart-handshake', rightIcon: 'swords', leftColor: '#84CC16', rightColor: '#DC2626' },
+  { key: 'multiAssim', categoryName: 'Immigration', leftLabel: 'Multiculturalist', rightLabel: 'Assimilationist', centerLabel: 'Middle Ground', leftIcon: 'palette', rightIcon: 'user-check', leftColor: '#F472B6', rightColor: '#78716C' },
+  { key: 'decentCent', categoryName: 'Governance', leftLabel: 'Decentralist', rightLabel: 'Centralist', centerLabel: 'Federalist', leftIcon: 'map-pin', rightIcon: 'building-2', leftColor: '#FB923C', rightColor: '#4B5563' },
+  { key: 'envInd', categoryName: 'Environment', leftLabel: 'Environmentalist', rightLabel: 'Industrialist', centerLabel: 'Balanced', leftIcon: 'leaf', rightIcon: 'factory', leftColor: '#22C55E', rightColor: '#92400E' },
+  { key: 'refRev', categoryName: 'Change', leftLabel: 'Revolutionary', rightLabel: 'Reformist', centerLabel: 'Gradualist', leftIcon: 'zap', rightIcon: 'rotate-cw', leftColor: '#EF4444', rightColor: '#6B7280' },
+  { key: 'intlIsol', categoryName: 'Intervention', leftLabel: 'Internationalist', rightLabel: 'Isolationist', centerLabel: 'Selective', leftIcon: 'globe', rightIcon: 'home', leftColor: '#3B82F6', rightColor: '#B91C1C' },
 ]
 
 // ─────────────────────────────────────────────
@@ -242,12 +279,69 @@ export const neoValuesQuestions: Question[] = [
 ]
 
 export const neoValuesConfig: AxisConfig[] = [
-  { key: 'economic', leftLabel: 'Equality', rightLabel: 'Markets', leftColor: '#EF4444', rightColor: '#3B82F6' },
-  { key: 'civil', leftLabel: 'Liberty', rightLabel: 'Authority', leftColor: '#22C55E', rightColor: '#7C3AED' },
-  { key: 'diplomatic', leftLabel: 'Pacifist / World', rightLabel: 'Hawk / Nation', leftColor: '#3B82F6', rightColor: '#DC2626' },
-  { key: 'environment', leftLabel: 'Environmentalist', rightLabel: 'Industrialist', leftColor: '#22C55E', rightColor: '#92400E' },
-  { key: 'technology', leftLabel: 'Skeptic', rightLabel: 'Techno-Optimist', leftColor: '#F59E0B', rightColor: '#6366F1' },
+  { key: 'economic', categoryName: 'Economy', leftLabel: 'Equality', rightLabel: 'Markets', centerLabel: 'Mixed', leftIcon: 'scale', rightIcon: 'trending-up', leftColor: '#EF4444', rightColor: '#3B82F6' },
+  { key: 'civil', categoryName: 'Civil Liberties', leftLabel: 'Liberty', rightLabel: 'Authority', centerLabel: 'Balanced', leftIcon: 'unlock', rightIcon: 'shield', leftColor: '#22C55E', rightColor: '#7C3AED' },
+  { key: 'diplomatic', categoryName: 'Diplomacy', leftLabel: 'Pacifist / World', rightLabel: 'Hawk / Nation', centerLabel: 'Pragmatic', leftIcon: 'heart-handshake', rightIcon: 'swords', leftColor: '#3B82F6', rightColor: '#DC2626' },
+  { key: 'environment', categoryName: 'Environment', leftLabel: 'Environmentalist', rightLabel: 'Industrialist', centerLabel: 'Balanced', leftIcon: 'leaf', rightIcon: 'factory', leftColor: '#22C55E', rightColor: '#92400E' },
+  { key: 'technology', categoryName: 'Technology', leftLabel: 'Skeptic', rightLabel: 'Techno-Optimist', centerLabel: 'Cautious', leftIcon: 'shield-alert', rightIcon: 'cpu', leftColor: '#F59E0B', rightColor: '#6366F1' },
 ]
+
+// ─────────────────────────────────────────────
+// NEOVALUES ARCHETYPES
+// A set of specific, sometimes idiosyncratic political identities
+// defined as target positions across the 5 NeoValues axes. Used to
+// find a "closest matching" identity for a fun, more specific result
+// than the broad axis bars alone provide.
+// ─────────────────────────────────────────────
+export interface NeoValuesArchetype {
+  name: string
+  abbrev: string
+  color: string
+  description: string
+  vector: { economic: number; civil: number; diplomatic: number; environment: number; technology: number }
+}
+
+export const neoValuesArchetypes: NeoValuesArchetype[] = [
+  { name: 'Anarcho-Capitalism', abbrev: 'AC', color: '#EAB308', vector: { economic: 9, civil: -9, diplomatic: 2, environment: 2, technology: 6 }, description: 'Markets without a state: property rights and voluntary exchange replace all government function, including law and defense.' },
+  { name: 'Anarcho-Communism', abbrev: 'AK', color: '#DC2626', vector: { economic: -9, civil: -9, diplomatic: -3, environment: 3, technology: -1 }, description: 'Stateless and classless — resources are held in common and coordinated through voluntary federations rather than markets or hierarchy.' },
+  { name: 'Anarcho-Monarchism', abbrev: 'AM', color: '#9CA3AF', vector: { economic: 2, civil: -6, diplomatic: 1, environment: -1, technology: -2 }, description: 'An unusual pairing: hostility to bureaucratic government alongside sympathy for a symbolic hereditary crown as a unifying, non-political figurehead.' },
+  { name: 'Voluntaryism', abbrev: 'VOL', color: '#F59E0B', vector: { economic: 6, civil: -8, diplomatic: -1, environment: 0, technology: 3 }, description: 'All social organization, including law and charity, should arise from consent alone — never from coercive taxation or conscription.' },
+  { name: 'Counter-Economics', abbrev: 'CE', color: '#78716C', vector: { economic: 7, civil: -7, diplomatic: -2, environment: -1, technology: 2 }, description: 'Builds alternative, informal markets deliberately outside state regulation and taxation as a form of peaceful resistance.' },
+  { name: 'Egoism', abbrev: 'EGO', color: '#14B8A6', vector: { economic: 3, civil: -9, diplomatic: 0, environment: -3, technology: 3 }, description: "Rejects any authority — moral, religious, or political — that isn't grounded in one's own self-interest and consent." },
+  { name: 'Armed Neutrality', abbrev: 'AN', color: '#EF4444', vector: { economic: 0, civil: -3, diplomatic: -7, environment: 0, technology: -1 }, description: 'Avoids foreign alliances and interventions entirely, while maintaining a strong, well-armed citizenry for self-defense.' },
+  { name: 'Distributism', abbrev: 'DIS', color: '#78350F', vector: { economic: -1, civil: 2, diplomatic: -1, environment: 1, technology: -2 }, description: 'Favors widely distributed small-scale ownership — family farms and businesses — over both corporate capitalism and state socialism.' },
+  { name: 'Georgism', abbrev: 'GEO', color: '#0EA5E9', vector: { economic: -2, civil: -2, diplomatic: -1, environment: 2, technology: 1 }, description: 'A single tax on land value replaces most other taxation, rewarding productive work while capturing unearned land rents.' },
+  { name: 'Techno-Progressivism', abbrev: 'TP', color: '#6366F1', vector: { economic: -4, civil: -3, diplomatic: -3, environment: -2, technology: 8 }, description: 'Believes technological acceleration — from biotech to AI — is the most promising path toward a freer, more equal future.' },
+  { name: 'Bioconservatism', abbrev: 'BC', color: '#92400E', vector: { economic: 1, civil: 3, diplomatic: 1, environment: 2, technology: -7 }, description: 'Wary of biotechnology and AI outpacing our ethical and social capacity to handle them responsibly.' },
+  { name: 'Eco-Anarchism', abbrev: 'EA', color: '#16A34A', vector: { economic: -6, civil: -7, diplomatic: -4, environment: 8, technology: 2 }, description: 'Imagines small, self-sufficient, ecologically-integrated communities built without centralized state or corporate control.' },
+  { name: 'Corporatism', abbrev: 'COR', color: '#B45309', vector: { economic: -2, civil: 5, diplomatic: 2, environment: 0, technology: -1 }, description: 'Organizes the economy around negotiated cooperation between government, worker, and employer associations rather than free markets or central planning.' },
+  { name: 'Technocracy', abbrev: 'TEC', color: '#0891B2', vector: { economic: -3, civil: 4, diplomatic: -1, environment: 3, technology: 9 }, description: 'Argues complex policy decisions should be made by scientists, engineers, and subject-matter experts rather than elected politicians.' },
+  { name: 'Paternalistic Conservatism', abbrev: 'PC', color: '#A16207', vector: { economic: -1, civil: 5, diplomatic: 2, environment: -1, technology: -3 }, description: 'Combines support for social hierarchy and tradition with a sense of obligation from the privileged toward the less fortunate.' },
+  { name: 'Market Socialism', abbrev: 'MS', color: '#DB2777', vector: { economic: -5, civil: -2, diplomatic: -2, environment: 1, technology: 2 }, description: 'Keeps competitive markets for goods and services, but has worker cooperatives — not private shareholders — own the firms.' },
+  { name: 'Deep Ecology', abbrev: 'DE', color: '#15803D', vector: { economic: -3, civil: -5, diplomatic: -3, environment: 9, technology: -5 }, description: 'Holds that all living things have worth independent of their usefulness to humans, and that industrial society must shrink dramatically.' },
+  { name: 'Transhumanism', abbrev: 'TH', color: '#7C3AED', vector: { economic: 2, civil: -6, diplomatic: -1, environment: -3, technology: 9 }, description: 'Advocates using technology — genetic engineering, cybernetics, life extension — to fundamentally enhance the human condition.' },
+  { name: 'Paleolibertarianism', abbrev: 'PL', color: '#CA8A04', vector: { economic: 5, civil: -5, diplomatic: -5, environment: -2, technology: -1 }, description: 'Pairs a strong commitment to free markets and small government with cultural traditionalism and a non-interventionist foreign policy.' },
+  { name: 'Neoliberalism', abbrev: 'NL', color: '#2563EB', vector: { economic: 5, civil: 1, diplomatic: 3, environment: -2, technology: 4 }, description: 'Emphasizes deregulation, free trade, and privatization, often paired with a fairly interventionist, internationalist foreign policy.' },
+]
+
+const NEOVALUES_AXIS_KEYS = ['economic', 'civil', 'diplomatic', 'environment', 'technology'] as const
+
+export function matchArchetypes(scores: Record<string, number>, archetypes: NeoValuesArchetype[]) {
+  const ranked = archetypes
+    .map((a) => {
+      const diffs = NEOVALUES_AXIS_KEYS.map((k) => Math.abs((scores[k] ?? 0) - a.vector[k]))
+      const avgDiff = diffs.reduce((s, d) => s + d, 0) / diffs.length
+      // Axis range is 20 wide (-10 to +10); express similarity as a percentage.
+      const similarity = Math.max(0, Math.round((1 - avgDiff / 20) * 100))
+      return { ...a, avgDiff, similarity }
+    })
+    .sort((a, b) => a.avgDiff - b.avgDiff)
+
+  const best = ranked[0]
+  const isExactMatch = best.avgDiff <= 2 // within ~2 points/axis on average = a confident match
+
+  return { ranked, best, isExactMatch }
+}
 
 // ─────────────────────────────────────────────
 // SCORING

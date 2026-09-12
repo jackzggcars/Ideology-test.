@@ -11,10 +11,14 @@ export interface CompassPoint {
 
 interface Props {
   userX: number // -10 to +10
-  userY: number // -10 to +10 (positive = authoritarian)
-  parties?: CompassPoint[]
-  showParties?: boolean
+  userY: number // -10 to +10 (positive = authoritarian/conservative pole)
+  points?: CompassPoint[]
   size?: number
+  userLabel?: string
+  topLabel?: string
+  bottomLabel?: string
+  leftLabel?: string
+  rightLabel?: string
 }
 
 function toSvg(val: number, svgSize: number, padding: number) {
@@ -22,170 +26,147 @@ function toSvg(val: number, svgSize: number, padding: number) {
   return padding + ((val + 10) / 20) * inner
 }
 
-export default function CompassViz({ userX, userY, parties = [], showParties = true, size = 500 }: Props) {
-  const P = 48 // padding
+export default function CompassViz({
+  userX,
+  userY,
+  points = [],
+  size = 480,
+  userLabel = 'You',
+  topLabel = 'Authoritarian',
+  bottomLabel = 'Libertarian',
+  leftLabel = 'Left',
+  rightLabel = 'Right',
+}: Props) {
+  const P = 34
   const S = size
   const inner = S - P * 2
   const mid = S / 2
 
-  const [hoveredParty, setHoveredParty] = useState<string | null>(null)
-  const [animated, setAnimated] = useState(false)
-  const [dotVisible, setDotVisible] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const [activePoint, setActivePoint] = useState<string | null>(null)
 
   useEffect(() => {
-    const t1 = setTimeout(() => setAnimated(true), 100)
-    const t2 = setTimeout(() => setDotVisible(true), 600)
-    return () => { clearTimeout(t1); clearTimeout(t2) }
+    const t = setTimeout(() => setVisible(true), 80)
+    return () => clearTimeout(t)
   }, [])
 
   const ux = toSvg(userX, S, P)
-  const uy = toSvg(-userY, S, P) // invert Y so authoritarian is top
-
-  const quadrants = [
-    { x: P, y: P, label: 'AUTH. LEFT', sub: '' },
-    { x: mid + 4, y: P, label: 'AUTH. RIGHT', sub: '' },
-    { x: P, y: mid + 4, label: 'LIB. LEFT', sub: '' },
-    { x: mid + 4, y: mid + 4, label: 'LIB. RIGHT', sub: '' },
-  ]
+  const uy = toSvg(-userY, S, P)
 
   return (
-    <div style={{ position: 'relative', width: S, height: S, maxWidth: '100%' }}>
+    <div style={{ position: 'relative', width: S, height: S + 40, maxWidth: '100%' }}>
       <svg
         width={S}
-        height={S}
-        viewBox={`0 0 ${S} ${S}`}
-        style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
+        height={S + 40}
+        viewBox={`0 0 ${S} ${S + 40}`}
+        style={{ display: 'block', maxWidth: '100%', height: 'auto', overflow: 'visible' }}
       >
-        {/* Quadrant backgrounds */}
-        <rect x={P} y={P} width={inner / 2} height={inner / 2} fill="rgba(239,68,68,0.06)" />
-        <rect x={mid} y={P} width={inner / 2} height={inner / 2} fill="rgba(59,130,246,0.06)" />
-        <rect x={P} y={mid} width={inner / 2} height={inner / 2} fill="rgba(239,68,68,0.04)" />
-        <rect x={mid} y={mid} width={inner / 2} height={inner / 2} fill="rgba(59,130,246,0.04)" />
+        {/* Top / bottom axis captions */}
+        <text x={mid} y={16} textAnchor="middle" fill="var(--muted-foreground)" fontSize="10" fontFamily="var(--font-mono)" letterSpacing="1.5">
+          {topLabel.toUpperCase()}
+        </text>
+        <text x={mid} y={S + 32} textAnchor="middle" fill="var(--muted-foreground)" fontSize="10" fontFamily="var(--font-mono)" letterSpacing="1.5">
+          {bottomLabel.toUpperCase()}
+        </text>
 
-        {/* Grid lines */}
-        {[-8, -6, -4, -2, 2, 4, 6, 8].map((v) => {
-          const gx = toSvg(v, S, P)
-          const gy = toSvg(v, S, P)
-          return (
-            <g key={v}>
-              <line x1={gx} y1={P} x2={gx} y2={S - P} stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
-              <line x1={P} y1={gy} x2={S - P} y2={gy} stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
-            </g>
-          )
-        })}
+        <g transform="translate(0, 22)">
+          {/* Faint minor gridlines */}
+          {[-8, -6, -4, -2, 0, 2, 4, 6, 8].map((v) => {
+            const gx = toSvg(v, S, P)
+            const gy = toSvg(v, S, P)
+            return (
+              <g key={v}>
+                <line x1={gx} y1={P} x2={gx} y2={S - P} stroke="var(--border)" strokeWidth="1" opacity={v === 0 ? 0 : 0.5} />
+                <line x1={P} y1={gy} x2={S - P} y2={gy} stroke="var(--border)" strokeWidth="1" opacity={v === 0 ? 0 : 0.5} />
+              </g>
+            )
+          })}
 
-        {/* Border */}
-        <rect x={P} y={P} width={inner} height={inner} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+          {/* Outer border */}
+          <rect x={P} y={P} width={inner} height={inner} fill="none" stroke="var(--border)" strokeWidth="1" />
 
-        {/* Axis lines */}
-        <line x1={mid} y1={P} x2={mid} y2={S - P} stroke="rgba(255,255,255,0.2)" strokeWidth="1" strokeDasharray="4,4" />
-        <line x1={P} y1={mid} x2={S - P} y2={mid} stroke="rgba(255,255,255,0.2)" strokeWidth="1" strokeDasharray="4,4" />
+          {/* Center axis lines */}
+          <line x1={mid} y1={P} x2={mid} y2={S - P} stroke="var(--muted-foreground)" strokeWidth="1" opacity={0.35} />
+          <line x1={P} y1={mid} x2={S - P} y2={mid} stroke="var(--muted-foreground)" strokeWidth="1" opacity={0.35} />
 
-        {/* Center crosshair */}
-        <circle cx={mid} cy={mid} r={3} fill="rgba(255,255,255,0.15)" />
-
-        {/* Axis labels */}
-        <text x={mid} y={P - 10} textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9" fontFamily="'JetBrains Mono', monospace" letterSpacing="2">AUTHORITARIAN</text>
-        <text x={mid} y={S - P + 18} textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9" fontFamily="'JetBrains Mono', monospace" letterSpacing="2">LIBERTARIAN</text>
-        <text x={P - 10} y={mid} textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9" fontFamily="'JetBrains Mono', monospace" letterSpacing="2" transform={`rotate(-90, ${P - 10}, ${mid})`}>LEFT</text>
-        <text x={S - P + 10} y={mid} textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9" fontFamily="'JetBrains Mono', monospace" letterSpacing="2" transform={`rotate(90, ${S - P + 10}, ${mid})`}>RIGHT</text>
-
-        {/* Quadrant labels */}
-        {quadrants.map((q, i) => (
-          <text
-            key={i}
-            x={q.x + (i % 2 === 0 ? 8 : inner / 2 - 8)}
-            y={q.y + (i < 2 ? 16 : inner / 2 - 8)}
-            textAnchor={i % 2 === 0 ? 'start' : 'end'}
-            fill="rgba(255,255,255,0.12)"
-            fontSize="8"
-            fontFamily="'JetBrains Mono', monospace"
-            letterSpacing="1.5"
-          >
-            {q.label}
+          {/* Left / right captions, vertical */}
+          <text x={P - 20} y={mid} textAnchor="middle" fill="var(--muted-foreground)" fontSize="10" fontFamily="var(--font-mono)" letterSpacing="1.5" transform={`rotate(-90, ${P - 20}, ${mid})`}>
+            {leftLabel.toUpperCase()}
           </text>
-        ))}
+          <text x={S - P + 20} y={mid} textAnchor="middle" fill="var(--muted-foreground)" fontSize="10" fontFamily="var(--font-mono)" letterSpacing="1.5" transform={`rotate(90, ${S - P + 20}, ${mid})`}>
+            {rightLabel.toUpperCase()}
+          </text>
 
-        {/* Party dots */}
-        {showParties && parties.map((p) => {
-          const px = toSvg(p.x, S, P)
-          const py = toSvg(-p.y, S, P)
-          const isHovered = hoveredParty === p.name
-          return (
-            <g
-              key={p.name}
-              onMouseEnter={() => setHoveredParty(p.name)}
-              onMouseLeave={() => setHoveredParty(null)}
-              style={{ cursor: 'default' }}
-            >
-              <circle cx={px} cy={py} r={isHovered ? 10 : 7} fill={p.color} opacity={isHovered ? 0.95 : 0.7} />
-              <circle cx={px} cy={py} r={isHovered ? 10 : 7} fill="none" stroke={p.color} strokeWidth="1" opacity={0.4} />
-              <text
-                x={px}
-                y={py - 12}
-                textAnchor="middle"
-                fill={p.color}
-                fontSize={isHovered ? '9' : '8'}
-                fontFamily="'JetBrains Mono', monospace"
-                letterSpacing="1"
-                opacity={isHovered ? 1 : 0.8}
+          {/* Reference points */}
+          {visible && points.map((p) => {
+            const px = toSvg(p.x, S, P)
+            const py = toSvg(-p.y, S, P)
+            const isActive = activePoint === p.name
+            const labelOnRight = px < mid + inner * 0.28
+            return (
+              <g
+                key={p.name}
+                onMouseEnter={() => setActivePoint(p.name)}
+                onMouseLeave={() => setActivePoint(null)}
+                style={{ cursor: 'default' }}
               >
-                {p.abbrev}
+                <circle cx={px} cy={py} r={isActive ? 6 : 4.5} fill={p.color} />
+                <text
+                  x={px + (labelOnRight ? 8 : -8)}
+                  y={py + 3.5}
+                  textAnchor={labelOnRight ? 'start' : 'end'}
+                  fill={p.color}
+                  fontSize={isActive ? '12.5' : '11'}
+                  fontFamily="var(--font-display)"
+                  fontWeight={isActive ? 800 : 700}
+                  style={{ transition: 'font-size 0.15s' }}
+                >
+                  {p.abbrev}
+                </text>
+              </g>
+            )
+          })}
+
+          {/* User dot */}
+          {visible && (
+            <g>
+              <circle cx={ux} cy={uy} r="6.5" fill="var(--primary)" stroke="var(--background)" strokeWidth="2" />
+              <text
+                x={ux + (ux < mid + inner * 0.28 ? 10 : -10)}
+                y={uy - 9}
+                textAnchor={ux < mid + inner * 0.28 ? 'start' : 'end'}
+                fill="var(--primary)"
+                fontSize="13"
+                fontFamily="var(--font-display)"
+                fontWeight={800}
+              >
+                {userLabel}
               </text>
             </g>
-          )
-        })}
-
-        {/* User dot */}
-        {dotVisible && (
-          <g>
-            {/* Pulse rings */}
-            <circle cx={ux} cy={uy} r="20" fill="none" stroke="var(--primary)" strokeWidth="1" opacity="0.3" />
-            <circle cx={ux} cy={uy} r="13" fill="none" stroke="var(--primary)" strokeWidth="1" opacity="0.5" />
-            {/* Main dot */}
-            <circle cx={ux} cy={uy} r="7" fill="var(--primary)" />
-            <circle cx={ux} cy={uy} r="7" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="1.5" />
-            <text
-              x={ux}
-              y={uy - 14}
-              textAnchor="middle"
-              fill="var(--primary)"
-              fontSize="9"
-              fontFamily="'JetBrains Mono', monospace"
-              letterSpacing="1.5"
-              fontWeight="600"
-            >
-              YOU
-            </text>
-          </g>
-        )}
+          )}
+        </g>
       </svg>
 
-      {/* Hovered party tooltip */}
-      {hoveredParty && (() => {
-        const p = parties.find((pt) => pt.name === hoveredParty)
-        if (!p) return null
-        return (
-          <div
-            style={{
-              position: 'absolute',
-              bottom: 8,
-              left: 8,
-              right: 8,
-              padding: '8px 12px',
-              border: `1px solid ${p.color}`,
-              backgroundColor: 'var(--background)',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.65rem',
-              letterSpacing: '0.1em',
-              color: p.color,
-              pointerEvents: 'none',
-            }}
-          >
-            {p.name.toUpperCase()}{p.sub ? ` — ${p.sub.toUpperCase()}` : ''}
-          </div>
-        )
-      })()}
+      {/* Hover detail, shown below the chart rather than as a floating tooltip */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: -6,
+          left: 0,
+          right: 0,
+          textAlign: 'center',
+          fontFamily: 'var(--font-mono)',
+          fontSize: '0.7rem',
+          color: 'var(--muted-foreground)',
+          height: '1.2em',
+        }}
+      >
+        {activePoint && (() => {
+          const p = points.find((pt) => pt.name === activePoint)
+          if (!p) return null
+          return <span style={{ color: p.color }}>{p.name}{p.sub ? ` — ${p.sub}` : ''}</span>
+        })()}
+      </div>
     </div>
   )
 }
