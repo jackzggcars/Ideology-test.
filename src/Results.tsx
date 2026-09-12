@@ -286,6 +286,7 @@ function NeoValuesResult({ scores }: { scores: Record<string, number> }) {
         {closest6.map((a) => {
           const isChosen = selected === a.name
           const isBest = a.name === best.name
+          const ownBackground = a.symbol === 'gadsden-coil' || a.symbol === 'hammer-sickle'
           return (
             <button
               key={a.name}
@@ -293,15 +294,22 @@ function NeoValuesResult({ scores }: { scores: Record<string, number> }) {
               className="flex flex-col items-center gap-2"
             >
               <div
-                className="rounded-full flex-shrink-0 flex items-center justify-center"
+                className="flex-shrink-0 flex items-center justify-center overflow-hidden"
                 style={{
                   width: 44,
                   height: 44,
-                  backgroundColor: a.color,
-                  boxShadow: isChosen ? `0 0 0 2px var(--background), 0 0 0 4px ${a.color}` : isBest ? `0 0 0 2px var(--background), 0 0 0 4px var(--border)` : 'none',
+                  borderRadius: ownBackground ? '6px' : '9999px',
+                  backgroundColor: ownBackground ? 'transparent' : a.color,
+                  boxShadow: isChosen
+                    ? `0 0 0 2px var(--background), 0 0 0 4px ${a.color}`
+                    : isBest
+                      ? `0 0 0 2px var(--background), 0 0 0 4px var(--border)`
+                      : ownBackground
+                        ? '0 0 0 1px var(--border)'
+                        : 'none',
                 }}
               >
-                <IdeologySymbol symbol={a.symbol} color="#0A0B0C" size={26} />
+                <IdeologySymbol symbol={a.symbol} color="#0A0B0C" size={ownBackground ? 44 : 26} />
               </div>
               <span
                 className="text-center leading-tight"
@@ -348,8 +356,21 @@ function NeoValuesResult({ scores }: { scores: Record<string, number> }) {
 
       {selectedArchetype && (
         <div className="p-5 flex gap-4 items-start" style={{ borderLeft: `3px solid ${selectedArchetype.color}`, backgroundColor: 'var(--secondary)' }}>
-          <div className="flex-shrink-0 mt-0.5 rounded-full flex items-center justify-center" style={{ width: 48, height: 48, backgroundColor: selectedArchetype.color }}>
-            <IdeologySymbol symbol={selectedArchetype.symbol} color="#0A0B0C" size={28} />
+          <div
+            className="flex-shrink-0 mt-0.5 flex items-center justify-center overflow-hidden"
+            style={{
+              width: 48,
+              height: 48,
+              borderRadius: selectedArchetype.symbol === 'gadsden-coil' || selectedArchetype.symbol === 'hammer-sickle' ? '8px' : '9999px',
+              backgroundColor: selectedArchetype.symbol === 'gadsden-coil' || selectedArchetype.symbol === 'hammer-sickle' ? 'transparent' : selectedArchetype.color,
+              boxShadow: selectedArchetype.symbol === 'gadsden-coil' || selectedArchetype.symbol === 'hammer-sickle' ? '0 0 0 1px var(--border)' : 'none',
+            }}
+          >
+            <IdeologySymbol
+              symbol={selectedArchetype.symbol}
+              color="#0A0B0C"
+              size={selectedArchetype.symbol === 'gadsden-coil' || selectedArchetype.symbol === 'hammer-sickle' ? 48 : 28}
+            />
           </div>
           <div>
             <div className="flex items-baseline gap-3 mb-2 flex-wrap">
