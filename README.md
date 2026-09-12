@@ -1,6 +1,6 @@
 # Political Compass Hub
 
-A single site with four political self-assessment tests — Political Compass, Vote Compass, 12 Axes, and NeoValues — each scored client-side and matched against a database of political parties and 25+ ideological traditions. Nothing is sent to a server; every test runs entirely in the browser.
+A single site with four political self-assessment tests — Political Compass, Vote Compass, 12 Axes, and NeoValues — each scored client-side and matched against a database of 12 political parties, 40 ideological traditions, and 30 NeoValues archetypes. Nothing is sent to a server; every test runs entirely in the browser.
 
 Built with React 19, TypeScript, Vite, and Tailwind CSS 4.
 

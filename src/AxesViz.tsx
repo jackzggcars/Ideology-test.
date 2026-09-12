@@ -72,7 +72,7 @@ function AxisRow({ axis, score, delay }: { axis: AxisConfig; score: number; dela
           style={{
             fontFamily: 'var(--font-mono)',
             fontSize: '0.65rem',
-            letterSpacing: '0.08em',
+            letterSpacing: '0.015em',
             color: 'var(--muted-foreground)',
           }}
         >

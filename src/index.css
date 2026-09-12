@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
 @import 'tailwindcss';
 
 @theme inline {
@@ -41,7 +41,7 @@
 
   --font-display: 'Barlow Condensed', sans-serif;
   --font-serif: 'Source Serif 4', serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-mono: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 * {

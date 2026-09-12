@@ -100,7 +100,7 @@ export default function TestRunner({ testName, questions, onComplete, onBack }: 
           style={{
             fontFamily: 'var(--font-mono)',
             fontSize: '0.65rem',
-            letterSpacing: '0.14em',
+            letterSpacing: '0.02em',
             color: 'var(--muted-foreground)',
           }}
           onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--foreground)')}
@@ -111,13 +111,13 @@ export default function TestRunner({ testName, questions, onComplete, onBack }: 
           </svg>
           BACK
         </button>
-        <div className="hidden sm:block" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1rem', letterSpacing: '0.1em' }}>
+        <div className="hidden sm:block" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1rem', letterSpacing: '0.015em' }}>
           {testName.toUpperCase()}
         </div>
         <div className="flex items-center gap-3">
           <span
             className="hidden md:inline"
-            style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.1em', color: 'var(--muted-foreground)' }}
+            style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.015em', color: 'var(--muted-foreground)' }}
           >
             {answeredCount} ANSWERED
           </span>
@@ -125,7 +125,7 @@ export default function TestRunner({ testName, questions, onComplete, onBack }: 
             style={{
               fontFamily: 'var(--font-mono)',
               fontSize: '0.65rem',
-              letterSpacing: '0.14em',
+              letterSpacing: '0.02em',
               color: 'var(--muted-foreground)',
             }}
           >
@@ -150,7 +150,7 @@ export default function TestRunner({ testName, questions, onComplete, onBack }: 
             style={{
               fontFamily: 'var(--font-mono)',
               fontSize: '0.6rem',
-              letterSpacing: '0.2em',
+              letterSpacing: '0.01em',
               color: 'var(--primary)',
             }}
           >
@@ -186,7 +186,7 @@ export default function TestRunner({ testName, questions, onComplete, onBack }: 
                     fontFamily: 'var(--font-display)',
                     fontWeight: isChosen ? 700 : 600,
                     fontSize: '0.95rem',
-                    letterSpacing: '0.06em',
+                    letterSpacing: '0.01em',
                     color: isChosen ? 'var(--foreground)' : 'var(--secondary-foreground)',
                   }}
                 >
@@ -206,7 +206,7 @@ export default function TestRunner({ testName, questions, onComplete, onBack }: 
                   {opt.label}
                   <span
                     className="ml-auto hidden sm:inline"
-                    style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.1em', color: 'var(--muted-foreground)' }}
+                    style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.015em', color: 'var(--muted-foreground)' }}
                   >
                     [{opt.key}]
                   </span>
@@ -219,7 +219,7 @@ export default function TestRunner({ testName, questions, onComplete, onBack }: 
           <div className="w-full flex items-center justify-between mt-8">
             <span
               className="hidden sm:inline"
-              style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.1em', color: 'var(--muted-foreground)' }}
+              style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.015em', color: 'var(--muted-foreground)' }}
             >
               TIP: PRESS 1–5 TO ANSWER, ENTER TO CONTINUE
             </span>
@@ -231,7 +231,7 @@ export default function TestRunner({ testName, questions, onComplete, onBack }: 
                 fontFamily: 'var(--font-display)',
                 fontWeight: 700,
                 fontSize: '0.85rem',
-                letterSpacing: '0.14em',
+                letterSpacing: '0.02em',
                 textTransform: 'uppercase',
                 padding: '10px 24px',
                 border: '1px solid',

@@ -43,7 +43,7 @@ function quadrantLabel(x: number, y: number): string {
 
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
-    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.14em', color: 'var(--primary)', marginBottom: '0.6rem' }}>
+    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.02em', color: 'var(--primary)', marginBottom: '0.6rem' }}>
       {children}
     </div>
   )
@@ -160,7 +160,7 @@ function CompassResult({ scores }: { scores: Record<string, number> }) {
                   {ideo.name}
                 </span>
               </div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', letterSpacing: '0.06em', color: 'var(--muted-foreground)', marginBottom: '0.65rem' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', letterSpacing: '0.01em', color: 'var(--muted-foreground)', marginBottom: '0.65rem' }}>
                 {ideo.family} · {ideo.alignment}% match{i === 0 ? ' · closest' : ''}
               </div>
               <p style={{ fontFamily: 'var(--font-serif)', fontSize: '0.8125rem', lineHeight: 1.55, color: 'var(--secondary-foreground)' }}>

@@ -56,7 +56,7 @@ function TestCard({
                 fontFamily: 'var(--font-display)',
                 fontSize: '1rem',
                 fontWeight: 700,
-                letterSpacing: '0.05em',
+                letterSpacing: '0.01em',
                 borderColor: hovered ? 'var(--primary)' : 'var(--border)',
                 color: hovered ? 'var(--primary)' : 'var(--foreground)',
                 transition: 'all 0.15s',
@@ -69,7 +69,7 @@ function TestCard({
                 style={{
                   fontFamily: 'var(--font-mono)',
                   fontSize: '0.55rem',
-                  letterSpacing: '0.16em',
+                  letterSpacing: '0.02em',
                   color: 'var(--muted-foreground)',
                   marginBottom: '3px',
                 }}
@@ -81,7 +81,7 @@ function TestCard({
                   fontFamily: 'var(--font-display)',
                   fontWeight: 800,
                   fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)',
-                  letterSpacing: '0.03em',
+                  letterSpacing: '0.01em',
                   lineHeight: 1,
                   color: 'var(--foreground)',
                 }}
@@ -94,7 +94,7 @@ function TestCard({
             style={{
               fontFamily: 'var(--font-mono)',
               fontSize: '0.6rem',
-              letterSpacing: '0.1em',
+              letterSpacing: '0.015em',
               color: 'var(--primary)',
               flexShrink: 0,
               paddingTop: '2px',
@@ -119,7 +119,7 @@ function TestCard({
         <div className="flex items-center justify-between pt-4 border-t border-[var(--border)]">
           <div className="flex gap-6">
             <div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.12em', color: 'var(--muted-foreground)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.02em', color: 'var(--muted-foreground)' }}>
                 QUESTIONS
               </div>
               <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.05rem' }}>
@@ -127,7 +127,7 @@ function TestCard({
               </div>
             </div>
             <div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.12em', color: 'var(--muted-foreground)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.02em', color: 'var(--muted-foreground)' }}>
                 DURATION
               </div>
               <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.05rem' }}>
@@ -142,7 +142,7 @@ function TestCard({
               fontFamily: 'var(--font-display)',
               fontWeight: 700,
               fontSize: '0.8rem',
-              letterSpacing: '0.12em',
+              letterSpacing: '0.02em',
               textTransform: 'uppercase',
               padding: '7px 18px',
               border: '1px solid var(--primary)',
@@ -219,7 +219,7 @@ export default function App() {
                 style={{
                   fontFamily: 'var(--font-mono)',
                   fontSize: '0.6rem',
-                  letterSpacing: '0.22em',
+                  letterSpacing: '0.01em',
                   color: 'var(--primary)',
                   marginBottom: '0.5rem',
                 }}
@@ -253,14 +253,14 @@ export default function App() {
                   lineHeight: 1.65,
                 }}
               >
-                Answer questions honestly. See where you fall on the ideological map. Compare yourself to parties and a database of 25+ political ideologies.
+                Answer questions honestly. See where you fall on the ideological map. Compare yourself to parties and a database of 40 political ideologies.
               </p>
               <div
                 className="mt-3"
                 style={{
                   fontFamily: 'var(--font-mono)',
                   fontSize: '0.6rem',
-                  letterSpacing: '0.14em',
+                  letterSpacing: '0.02em',
                   color: 'var(--muted-foreground)',
                 }}
               >
@@ -275,7 +275,7 @@ export default function App() {
       <div className="max-w-5xl mx-auto px-6 md:px-10">
         <div className="flex items-center gap-4 py-4 border-b border-[var(--border)]">
           <div className="h-px flex-1" style={{ backgroundColor: 'var(--border)' }} />
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.2em', color: 'var(--muted-foreground)' }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.01em', color: 'var(--muted-foreground)' }}>
             SELECT A TEST TO BEGIN
           </span>
           <div className="h-px flex-1" style={{ backgroundColor: 'var(--border)' }} />
@@ -292,10 +292,10 @@ export default function App() {
 
       <footer className="border-t border-[var(--border)] mt-8">
         <div className="max-w-5xl mx-auto px-6 md:px-10 py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.12em', color: 'var(--muted-foreground)' }}>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.02em', color: 'var(--muted-foreground)' }}>
             NO DATA IS STORED. ALL TESTS RUN ENTIRELY IN YOUR BROWSER.
           </p>
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.12em', color: 'var(--muted-foreground)' }}>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.02em', color: 'var(--muted-foreground)' }}>
             POLITICAL TESTS INDEX — {new Date().getFullYear()}
           </p>
         </div>
