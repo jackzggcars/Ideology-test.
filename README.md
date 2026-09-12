@@ -1,6 +1,6 @@
 # Political Compass Hub
 
-A single site with six political and philosophical self-assessment tests — Political Compass, Vote Compass, 12 Axes, NeoValues, PhiloSorter, and Politician & Nation — each scored (or branched, or matched) client-side against a database of 12 political parties, 47 ideological traditions, 37 NeoValues archetypes, 96 philosophical schools, 45 historical/modern countries, and 60 politicians. Nothing is sent to a server; every test runs entirely in the browser.
+A single site with six political and philosophical self-assessment tests — Political Compass, Vote Compass, 12 Axes, NeoValues, PhiloSorter, and Politician & Nation — each scored (or branched, or matched) client-side against a database of 12 political parties, 47 ideological traditions, 52 NeoValues archetypes, 96 philosophical schools, 45 historical/modern countries, and 60 politicians. Nothing is sent to a server; every test runs entirely in the browser.
 
 Built with React 19, TypeScript, Vite, and Tailwind CSS 4.
 

@@ -2,7 +2,6 @@ import { useState } from 'react'
 import type { ReactNode } from 'react'
 import CompassViz from './CompassViz'
 import AxesViz from './AxesViz'
-import ArchetypeIcon from './ArchetypeIcon'
 import IdeologySymbol from './IdeologySymbol'
 import Emblem from './Emblem'
 import {
@@ -294,13 +293,15 @@ function NeoValuesResult({ scores }: { scores: Record<string, number> }) {
               className="flex flex-col items-center gap-2"
             >
               <div
-                className="rounded-full flex-shrink-0"
+                className="rounded-full flex-shrink-0 flex items-center justify-center"
                 style={{
+                  width: 44,
+                  height: 44,
+                  backgroundColor: a.color,
                   boxShadow: isChosen ? `0 0 0 2px var(--background), 0 0 0 4px ${a.color}` : isBest ? `0 0 0 2px var(--background), 0 0 0 4px var(--border)` : 'none',
-                  borderRadius: '9999px',
                 }}
               >
-                <ArchetypeIcon icon={a.icon} color={a.color} />
+                <IdeologySymbol symbol={a.symbol} color="#0A0B0C" size={26} />
               </div>
               <span
                 className="text-center leading-tight"
@@ -347,8 +348,8 @@ function NeoValuesResult({ scores }: { scores: Record<string, number> }) {
 
       {selectedArchetype && (
         <div className="p-5 flex gap-4 items-start" style={{ borderLeft: `3px solid ${selectedArchetype.color}`, backgroundColor: 'var(--secondary)' }}>
-          <div className="flex-shrink-0 mt-0.5">
-            <ArchetypeIcon icon={selectedArchetype.icon} color={selectedArchetype.color} size={36} />
+          <div className="flex-shrink-0 mt-0.5 rounded-full flex items-center justify-center" style={{ width: 48, height: 48, backgroundColor: selectedArchetype.color }}>
+            <IdeologySymbol symbol={selectedArchetype.symbol} color="#0A0B0C" size={28} />
           </div>
           <div>
             <div className="flex items-baseline gap-3 mb-2 flex-wrap">

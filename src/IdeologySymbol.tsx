@@ -1,12 +1,13 @@
 import {
   Scale, Crown, Leaf, Flame, Wheat, Sun, Award, Trees, Globe, Shield,
-  Landmark, Flower2, Hammer, type LucideIcon,
+  Landmark, Flower2, Hammer, Cpu, Dna, type LucideIcon,
 } from 'lucide-react'
 
 export type IdeologySymbolKey =
   | 'circle-a' | 'hammer-sickle' | 'fasces' | 'gadsden-coil'
   | 'rose' | 'scales' | 'torch' | 'wheat-sheaf' | 'leaf' | 'globe'
   | 'sun' | 'laurel' | 'oak-leaf' | 'shield' | 'temple' | 'crown' | 'dove'
+  | 'cpu' | 'dna'
 
 const ICONS: Partial<Record<IdeologySymbolKey, LucideIcon>> = {
   scales: Scale,
@@ -23,6 +24,8 @@ const ICONS: Partial<Record<IdeologySymbolKey, LucideIcon>> = {
   rose: Flower2,
   'hammer-sickle': Hammer,
   dove: Award, // reused: a generic "shared honor" mark for communitarian/harmony-flavored ideologies
+  cpu: Cpu,
+  dna: Dna,
 }
 
 interface Props {
