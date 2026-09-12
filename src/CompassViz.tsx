@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import IdeologySymbol from './IdeologySymbol'
+import type { IdeologySymbolKey } from './IdeologySymbol'
 
 export interface CompassPoint {
   name: string
@@ -7,6 +9,7 @@ export interface CompassPoint {
   y: number
   color: string
   sub?: string
+  symbol?: IdeologySymbolKey
 }
 
 interface Props {
@@ -103,6 +106,7 @@ export default function CompassViz({
             const py = toSvg(-p.y, S, P)
             const isActive = activePoint === p.name
             const labelOnRight = px < mid + inner * 0.28
+            const symbolSize = isActive ? 22 : 18
             return (
               <g
                 key={p.name}
@@ -110,9 +114,17 @@ export default function CompassViz({
                 onMouseLeave={() => setActivePoint(null)}
                 style={{ cursor: 'default' }}
               >
-                <circle cx={px} cy={py} r={isActive ? 6 : 4.5} fill={p.color} />
+                {p.symbol ? (
+                  <foreignObject x={px - symbolSize / 2} y={py - symbolSize / 2} width={symbolSize} height={symbolSize} style={{ overflow: 'visible' }}>
+                    <div style={{ width: symbolSize, height: symbolSize, filter: 'drop-shadow(0 0 2px var(--background)) drop-shadow(0 0 2px var(--background))' }}>
+                      <IdeologySymbol symbol={p.symbol} color={p.color} size={symbolSize} />
+                    </div>
+                  </foreignObject>
+                ) : (
+                  <circle cx={px} cy={py} r={isActive ? 6 : 4.5} fill={p.color} />
+                )}
                 <text
-                  x={px + (labelOnRight ? 8 : -8)}
+                  x={px + (labelOnRight ? (p.symbol ? symbolSize / 2 + 4 : 8) : -(p.symbol ? symbolSize / 2 + 4 : 8))}
                   y={py + 3.5}
                   textAnchor={labelOnRight ? 'start' : 'end'}
                   fill={p.color}

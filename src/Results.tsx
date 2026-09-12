@@ -14,6 +14,7 @@ import {
   twelveAxesConfig,
 } from './data'
 import { countries, politicians } from './politicianNationData'
+import { FLAG_URLS } from './flags'
 import type { AxisConfig } from './data'
 
 interface Props {
@@ -368,24 +369,37 @@ function NeoValuesResult({ scores }: { scores: Record<string, number> }) {
   )
 }
 
+function FlagBadge({ code, size = 28 }: { code: string; size?: number }) {
+  const url = FLAG_URLS[code]
+  if (!url) return null
+  return (
+    <img
+      src={url}
+      alt=""
+      aria-hidden="true"
+      style={{
+        display: 'inline-block',
+        width: size,
+        height: size * 0.75,
+        objectFit: 'cover',
+        border: '1px solid var(--border)',
+        flexShrink: 0,
+      }}
+      title="Real national flag"
+    />
+  )
+}
+
 function CountryCard({ c, alignment, isTop }: { c: (typeof countries)[number] & { alignment?: number }; alignment?: number; isTop?: boolean }) {
   return (
     <div className="flex flex-col sm:flex-row gap-5" style={isTop ? {} : { opacity: 0.85 }}>
-      <div className="w-full sm:w-40 flex-shrink-0 overflow-hidden relative" style={{ border: '1px solid var(--border)', height: isTop ? '110px' : '80px' }}>
+      <div className="w-full sm:w-40 flex-shrink-0 overflow-hidden" style={{ border: '1px solid var(--border)', height: isTop ? '110px' : '80px' }}>
         <Emblem colors={c.colors} pattern={c.pattern} title={c.name} className="w-full h-full" />
-        {c.flag && (
-          <div
-            className="absolute bottom-1.5 right-1.5 flex items-center justify-center rounded-full"
-            style={{ fontSize: isTop ? '1.6rem' : '1.2rem', backgroundColor: 'rgba(0,0,0,0.35)', width: isTop ? '2.4rem' : '1.9rem', height: isTop ? '2.4rem' : '1.9rem', lineHeight: 1 }}
-            title="Modern national flag (illustrative)"
-          >
-            {c.flag}
-          </div>
-        )}
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-3 flex-wrap mb-1">
-          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: isTop ? '1.4rem' : '1.05rem' }}>
+          <span className="flex items-center gap-2.5" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: isTop ? '1.4rem' : '1.05rem' }}>
+            {c.flag && <FlagBadge code={c.flag} size={isTop ? 30 : 24} />}
             {c.name}
           </span>
           {alignment !== undefined && (
@@ -409,23 +423,15 @@ function PoliticianCard({ p, alignment, isTop }: { p: (typeof politicians)[numbe
   return (
     <div className="flex flex-col sm:flex-row gap-5" style={isTop ? {} : { opacity: 0.85 }}>
       <div
-        className="flex-shrink-0 overflow-hidden rounded-full relative"
+        className="flex-shrink-0 overflow-hidden rounded-full"
         style={{ border: '1px solid var(--border)', width: isTop ? '110px' : '72px', height: isTop ? '110px' : '72px' }}
       >
         <Emblem colors={p.colors} pattern={p.pattern} title={p.name} className="w-full h-full" />
-        {p.flag && (
-          <div
-            className="absolute bottom-0 right-0 flex items-center justify-center rounded-full"
-            style={{ fontSize: isTop ? '1.3rem' : '1rem', backgroundColor: 'rgba(0,0,0,0.4)', width: isTop ? '2rem' : '1.6rem', height: isTop ? '2rem' : '1.6rem', lineHeight: 1 }}
-            title="Associated modern nation (illustrative)"
-          >
-            {p.flag}
-          </div>
-        )}
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-3 flex-wrap mb-1">
-          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: isTop ? '1.4rem' : '1.05rem' }}>
+          <span className="flex items-center gap-2.5" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: isTop ? '1.4rem' : '1.05rem' }}>
+            {p.flag && <FlagBadge code={p.flag} size={isTop ? 30 : 24} />}
             {p.name}
           </span>
           {alignment !== undefined && (
