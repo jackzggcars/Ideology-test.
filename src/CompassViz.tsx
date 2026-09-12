@@ -63,10 +63,10 @@ export default function CompassViz({
       >
         {/* Top / bottom axis captions */}
         <text x={mid} y={16} textAnchor="middle" fill="var(--muted-foreground)" fontSize="10" fontFamily="var(--font-mono)" letterSpacing="0.3">
-          {topLabel.toUpperCase()}
+          {topLabel}
         </text>
         <text x={mid} y={S + 32} textAnchor="middle" fill="var(--muted-foreground)" fontSize="10" fontFamily="var(--font-mono)" letterSpacing="0.3">
-          {bottomLabel.toUpperCase()}
+          {bottomLabel}
         </text>
 
         <g transform="translate(0, 22)">
@@ -91,10 +91,10 @@ export default function CompassViz({
 
           {/* Left / right captions, vertical */}
           <text x={P - 20} y={mid} textAnchor="middle" fill="var(--muted-foreground)" fontSize="10" fontFamily="var(--font-mono)" letterSpacing="0.3" transform={`rotate(-90, ${P - 20}, ${mid})`}>
-            {leftLabel.toUpperCase()}
+            {leftLabel}
           </text>
           <text x={S - P + 20} y={mid} textAnchor="middle" fill="var(--muted-foreground)" fontSize="10" fontFamily="var(--font-mono)" letterSpacing="0.3" transform={`rotate(90, ${S - P + 20}, ${mid})`}>
-            {rightLabel.toUpperCase()}
+            {rightLabel}
           </text>
 
           {/* Reference points */}

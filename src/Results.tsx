@@ -402,8 +402,6 @@ function ShareButton({ testName, scores }: { testName: string; scores: Record<st
 export default function Results({ testId, testName, scores, resultType, onRetake, onHome }: Props) {
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
-      <div className="h-1 w-full" style={{ backgroundColor: 'var(--primary)' }} />
-
       <header className="border-b border-[var(--border)] px-6 md:px-10 py-4 flex flex-wrap items-center justify-between gap-3">
         <button
           onClick={onHome}

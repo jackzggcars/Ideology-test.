@@ -36,126 +36,84 @@ function TestCard({
 
   return (
     <article
-      className="border border-[var(--border)] transition-colors duration-150 cursor-pointer"
-      style={{ borderColor: hovered ? 'var(--primary)' : 'var(--border)' }}
+      className="border-b border-[var(--border)] py-8 md:py-10 cursor-pointer transition-colors duration-150"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={onStart}
     >
-      <div
-        className="h-[3px] w-full transition-colors duration-150"
-        style={{ backgroundColor: hovered ? 'var(--primary)' : 'var(--border)' }}
-      />
-
-      <div className="p-6 md:p-8">
-        <div className="flex items-start justify-between gap-4 mb-4">
-          <div className="flex items-center gap-4">
-            <div
-              className="w-12 h-12 flex items-center justify-center border border-[var(--border)] flex-shrink-0"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: '1rem',
-                fontWeight: 700,
-                letterSpacing: '0.01em',
-                borderColor: hovered ? 'var(--primary)' : 'var(--border)',
-                color: hovered ? 'var(--primary)' : 'var(--foreground)',
-                transition: 'all 0.15s',
-              }}
-            >
-              {test.abbrev}
-            </div>
-            <div>
-              <div
-                style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '0.55rem',
-                  letterSpacing: '0.02em',
-                  color: 'var(--muted-foreground)',
-                  marginBottom: '3px',
-                }}
-              >
-                TEST {String(index + 1).padStart(2, '0')}
-              </div>
-              <h2
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontWeight: 800,
-                  fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)',
-                  letterSpacing: '0.01em',
-                  lineHeight: 1,
-                  color: 'var(--foreground)',
-                }}
-              >
-                {test.name}
-              </h2>
-            </div>
-          </div>
-          <div
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.6rem',
-              letterSpacing: '0.015em',
-              color: 'var(--primary)',
-              flexShrink: 0,
-              paddingTop: '2px',
-            }}
-          >
-            {test.tag}
-          </div>
-        </div>
-
-        <p
-          className="mb-5"
+      <div className="flex flex-col md:flex-row gap-5 md:gap-10">
+        {/* Index number */}
+        <div
+          className="flex-shrink-0"
           style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: '0.9375rem',
-            lineHeight: 1.65,
-            color: 'var(--secondary-foreground)',
+            fontFamily: 'var(--font-display)',
+            fontWeight: 400,
+            fontSize: '2.75rem',
+            lineHeight: 1,
+            color: hovered ? 'var(--primary)' : 'var(--border)',
+            transition: 'color 0.2s',
+            fontStyle: 'italic',
           }}
         >
-          {test.description}
-        </p>
+          {String(index + 1).padStart(2, '0')}
+        </div>
 
-        <div className="flex items-center justify-between pt-4 border-t border-[var(--border)]">
-          <div className="flex gap-6">
-            <div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.02em', color: 'var(--muted-foreground)' }}>
-                QUESTIONS
-              </div>
-              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.05rem' }}>
-                {test.questions}
-              </div>
-            </div>
-            <div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.02em', color: 'var(--muted-foreground)' }}>
-                DURATION
-              </div>
-              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.05rem' }}>
-                {test.duration}
-              </div>
-            </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-baseline justify-between gap-4 mb-2 flex-wrap">
+            <h2
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 600,
+                fontSize: 'clamp(1.3rem, 2.5vw, 1.7rem)',
+                lineHeight: 1.1,
+                color: 'var(--foreground)',
+              }}
+            >
+              {test.name}
+            </h2>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--primary)' }}>
+              {test.tag}
+            </span>
           </div>
 
-          <button
-            className="flex items-center gap-2 transition-all duration-150"
+          <p
+            className="mb-5"
             style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 700,
-              fontSize: '0.8rem',
-              letterSpacing: '0.02em',
-              textTransform: 'uppercase',
-              padding: '7px 18px',
-              border: '1px solid var(--primary)',
-              color: hovered ? 'white' : 'var(--primary)',
-              backgroundColor: hovered ? 'var(--primary)' : 'transparent',
+              fontFamily: 'var(--font-serif)',
+              fontSize: '0.9375rem',
+              lineHeight: 1.65,
+              color: 'var(--secondary-foreground)',
+              maxWidth: '620px',
             }}
-            onClick={(e) => { e.stopPropagation(); onStart() }}
           >
-            BEGIN
-            <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-              <path d="M2 5.5h7M5.5 2l3.5 3.5L5.5 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
-            </svg>
-          </button>
+            {test.description}
+          </p>
+
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div
+              style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--muted-foreground)' }}
+            >
+              {test.questions} questions · {test.duration}
+            </div>
+
+            <button
+              className="flex items-center gap-2"
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontWeight: 600,
+                fontSize: '0.85rem',
+                color: 'var(--primary)',
+                borderBottom: hovered ? '1px solid var(--primary)' : '1px solid transparent',
+                paddingBottom: '2px',
+              }}
+              onClick={(e) => { e.stopPropagation(); onStart() }}
+            >
+              Begin
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" style={{ transform: hovered ? 'translateX(2px)' : 'none', transition: 'transform 0.15s' }}>
+                <path d="M2 5.5h7M5.5 2l3.5 3.5L5.5 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </article>
@@ -209,8 +167,6 @@ export default function App() {
   // HOME
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
-      <div className="h-1 w-full" style={{ backgroundColor: 'var(--primary)' }} />
-
       <header className="border-b border-[var(--border)]">
         <div className="max-w-5xl mx-auto px-6 md:px-10 py-8 md:py-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -218,29 +174,22 @@ export default function App() {
               <div
                 style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.6rem',
-                  letterSpacing: '0.01em',
+                  fontSize: '0.75rem',
                   color: 'var(--primary)',
-                  marginBottom: '0.5rem',
+                  marginBottom: '0.75rem',
                 }}
               >
-                POLITICAL SELF-ASSESSMENT / OPEN INDEX
+                A free, open index of political self-assessment tests
               </div>
               <h1
                 style={{
                   fontFamily: 'var(--font-display)',
-                  fontWeight: 800,
-                  fontSize: 'clamp(2.5rem, 7vw, 4.5rem)',
-                  letterSpacing: '0.01em',
-                  lineHeight: 0.9,
-                  textTransform: 'uppercase',
+                  fontWeight: 600,
+                  fontSize: 'clamp(2.6rem, 6.5vw, 4.25rem)',
+                  lineHeight: 1.05,
                 }}
               >
-                IDEOLOGY
-                <br />
-                <span style={{ color: 'var(--primary)' }}>&amp; POLITICAL</span>
-                <br />
-                TESTS
+                Ideology <span style={{ fontStyle: 'italic', color: 'var(--primary)' }}>&amp; political</span> tests
               </h1>
             </div>
             <div className="md:text-right max-w-sm">
@@ -259,12 +208,11 @@ export default function App() {
                 className="mt-3"
                 style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.6rem',
-                  letterSpacing: '0.02em',
+                  fontSize: '0.8rem',
                   color: 'var(--muted-foreground)',
                 }}
               >
-                {TESTS.length} TESTS — ALL FREE — NO ACCOUNT REQUIRED — RUNS IN YOUR BROWSER
+                {TESTS.length} tests — all free — no account required
               </div>
             </div>
           </div>
@@ -272,17 +220,13 @@ export default function App() {
       </header>
 
       {/* Divider */}
-      <div className="max-w-5xl mx-auto px-6 md:px-10">
-        <div className="flex items-center gap-4 py-4 border-b border-[var(--border)]">
-          <div className="h-px flex-1" style={{ backgroundColor: 'var(--border)' }} />
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.01em', color: 'var(--muted-foreground)' }}>
-            SELECT A TEST TO BEGIN
-          </span>
-          <div className="h-px flex-1" style={{ backgroundColor: 'var(--border)' }} />
-        </div>
+      <div className="max-w-5xl mx-auto px-6 md:px-10 pt-8">
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>
+          Choose a test to begin
+        </span>
       </div>
 
-      <main className="max-w-5xl mx-auto px-6 md:px-10 py-8">
+      <main className="max-w-5xl mx-auto px-6 md:px-10 py-6">
         <div className="flex flex-col gap-0">
           {TESTS.map((test, i) => (
             <TestCard key={test.id} test={test} index={i} onStart={() => startTest(test.id)} />
@@ -292,11 +236,11 @@ export default function App() {
 
       <footer className="border-t border-[var(--border)] mt-8">
         <div className="max-w-5xl mx-auto px-6 md:px-10 py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.02em', color: 'var(--muted-foreground)' }}>
-            NO DATA IS STORED. ALL TESTS RUN ENTIRELY IN YOUR BROWSER.
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>
+            No data is stored — every test runs entirely in your browser.
           </p>
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.02em', color: 'var(--muted-foreground)' }}>
-            POLITICAL TESTS INDEX — {new Date().getFullYear()}
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>
+            Political Compass Hub — {new Date().getFullYear()}
           </p>
         </div>
       </footer>

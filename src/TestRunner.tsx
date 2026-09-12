@@ -81,17 +81,13 @@ export default function TestRunner({ testName, questions, onComplete, onBack }: 
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--background)' }}>
-      {/* Top bar */}
-      <div className="h-1 w-full" style={{ backgroundColor: 'var(--primary)' }} />
-      <div
-        className="h-[3px] transition-all duration-500"
-        style={{
-          width: `${progress * 100}%`,
-          backgroundColor: 'var(--primary)',
-          marginTop: '-3px',
-          opacity: 0.4,
-        }}
-      />
+      {/* Progress track */}
+      <div className="h-[3px] w-full" style={{ backgroundColor: 'var(--border)' }}>
+        <div
+          className="h-full transition-all duration-500"
+          style={{ width: `${progress * 100}%`, backgroundColor: 'var(--primary)' }}
+        />
+      </div>
 
       <header className="border-b border-[var(--border)] px-6 md:px-10 py-4 flex items-center justify-between gap-3">
         <button
@@ -109,17 +105,17 @@ export default function TestRunner({ testName, questions, onComplete, onBack }: 
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
             <path d="M8 5H2M5 2L2 5l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
           </svg>
-          BACK
+          Back
         </button>
         <div className="hidden sm:block" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1rem', letterSpacing: '0.015em' }}>
-          {testName.toUpperCase()}
+          {testName}
         </div>
         <div className="flex items-center gap-3">
           <span
             className="hidden md:inline"
             style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.015em', color: 'var(--muted-foreground)' }}
           >
-            {answeredCount} ANSWERED
+            {answeredCount} answered
           </span>
           <div
             style={{
@@ -154,7 +150,7 @@ export default function TestRunner({ testName, questions, onComplete, onBack }: 
               color: 'var(--primary)',
             }}
           >
-            QUESTION {String(current + 1).padStart(2, '0')}
+            Question {String(current + 1).padStart(2, '0')}
           </div>
 
           {/* Question text */}
@@ -221,18 +217,16 @@ export default function TestRunner({ testName, questions, onComplete, onBack }: 
               className="hidden sm:inline"
               style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.015em', color: 'var(--muted-foreground)' }}
             >
-              TIP: PRESS 1–5 TO ANSWER, ENTER TO CONTINUE
+              Tip: press 1–5 to answer, enter to continue
             </span>
             <button
               onClick={handleNext}
               disabled={selected === null}
               className="flex items-center gap-3 transition-colors duration-150 ml-auto"
               style={{
-                fontFamily: 'var(--font-display)',
-                fontWeight: 700,
-                fontSize: '0.85rem',
-                letterSpacing: '0.02em',
-                textTransform: 'uppercase',
+                fontFamily: 'var(--font-mono)',
+                fontWeight: 600,
+                fontSize: '0.9rem',
                 padding: '10px 24px',
                 border: '1px solid',
                 borderColor: selected !== null ? 'var(--primary)' : 'var(--border)',
@@ -241,7 +235,7 @@ export default function TestRunner({ testName, questions, onComplete, onBack }: 
                 cursor: selected !== null ? 'pointer' : 'not-allowed',
               }}
             >
-              {isLast ? 'SEE RESULTS' : 'NEXT'}
+              {isLast ? 'See results' : 'Next'}
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                 <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
               </svg>
