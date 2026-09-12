@@ -371,6 +371,7 @@ export const neoValuesArchetypes: NeoValuesArchetype[] = [
   { name: 'Hobbesian Absolutism', abbrev: 'HA', color: '#3F3F46', icon: 'crown', vector: { economic: 0, civil: 7, diplomatic: 3, environment: -1, technology: -2 }, description: 'Holds that only an undivided sovereign can prevent a war of all against all — subjects trade obedience for security through absolute authority.' },
   { name: 'Traditionalism', abbrev: 'TRD', color: '#44403C', icon: 'mountain', vector: { economic: 0, civil: 6, diplomatic: -2, environment: 1, technology: -6 }, description: 'Holds that a perennial sacred order underlies the great religious traditions, and that modernity is a civilizational inversion of it.' },
   { name: 'Marxism', abbrev: 'MRX', color: '#7F1D1D', icon: 'users', vector: { economic: -7, civil: 2, diplomatic: -2, environment: 0, technology: 0 }, description: 'Analyzes history as a sequence of class struggles over control of production, and calls for abolishing the conditions that make exploitation profitable.' },
+  { name: 'Burkean Conservatism', abbrev: 'BRK', color: '#92400E', icon: 'sprout', vector: { economic: 2, civil: 3, diplomatic: 1, environment: 1, technology: -3 }, description: 'Trusts inherited institutions over any planner\u2019s blueprint, favoring gradual reform, continuity between generations, and deep distrust of sweeping abstraction.' },
 ]
 
 const NEOVALUES_AXIS_KEYS = ['economic', 'civil', 'diplomatic', 'environment', 'technology'] as const
@@ -474,7 +475,7 @@ export const TESTS = [
     tag: 'Modern',
     questions: 20,
     duration: '~12 min',
-    description: 'A five-axis model built for contemporary politics. Covers economic philosophy, civil liberties, diplomacy, environmental stance, and attitudes toward technology — then matches you to the closest of 36 specific political identities, from Agorism to Technocracy.',
+    description: 'A five-axis model built for contemporary politics. Covers economic philosophy, civil liberties, diplomacy, environmental stance, and attitudes toward technology — then matches you to the closest of 37 specific political identities, from Agorism to Technocracy.',
     resultType: 'axes' as const,
   },
   {
@@ -486,5 +487,15 @@ export const TESTS = [
     duration: '~3 min',
     description: 'Not a scored test — a branching flowchart. A handful of yes/no and either/or questions about reality, knowledge, ethics, and legitimate authority sort you into one of 96 philosophical schools, from Platonism to Hoppeanism.',
     resultType: 'branching' as const,
+  },
+  {
+    id: 'politician-nation',
+    name: 'Politician & Nation',
+    abbrev: 'PN',
+    tag: 'Historical',
+    questions: 20,
+    duration: '~9 min',
+    description: 'Questions about power, trade, and legitimacy match you to your most compatible country — ancient or modern — and the historical or contemporary politician whose governing style lines up closest with your answers.',
+    resultType: 'dual-match' as const,
   },
 ]

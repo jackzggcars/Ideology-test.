@@ -10,6 +10,7 @@ import {
   scoreAxes,
   TESTS,
 } from './data'
+import { politicianNationQuestions } from './politicianNationData'
 import type { Response } from './data'
 
 type Screen = 'home' | 'test' | 'results'
@@ -20,6 +21,7 @@ function getQuestions(id: string) {
     case 'vote-compass': return voteCompassQuestions
     case '12axes': return twelveAxesQuestions
     case 'neovalues': return neoValuesQuestions
+    case 'politician-nation': return politicianNationQuestions
     default: return []
   }
 }

@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import CompassViz from './CompassViz'
 import AxesViz from './AxesViz'
 import ArchetypeIcon from './ArchetypeIcon'
+import Emblem from './Emblem'
 import {
   partyProximity,
   partyPositions,
@@ -11,13 +12,14 @@ import {
   neoValuesArchetypes,
   twelveAxesConfig,
 } from './data'
+import { countries, politicians } from './politicianNationData'
 import type { AxisConfig } from './data'
 
 interface Props {
   testId: string
   testName: string
   scores: Record<string, number>
-  resultType: 'compass' | 'axes' | 'vote-compass' | 'branching'
+  resultType: 'compass' | 'axes' | 'vote-compass' | 'branching' | 'dual-match'
   onRetake: () => void
   onHome: () => void
 }
@@ -365,6 +367,115 @@ function NeoValuesResult({ scores }: { scores: Record<string, number> }) {
   )
 }
 
+function CountryCard({ c, alignment, isTop }: { c: (typeof countries)[number] & { alignment?: number }; alignment?: number; isTop?: boolean }) {
+  return (
+    <div className="flex flex-col sm:flex-row gap-5" style={isTop ? {} : { opacity: 0.85 }}>
+      <div className="w-full sm:w-40 flex-shrink-0 overflow-hidden" style={{ border: '1px solid var(--border)', height: isTop ? '110px' : '80px' }}>
+        <Emblem colors={c.colors} pattern={c.pattern} title={c.name} className="w-full h-full" />
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center justify-between gap-3 flex-wrap mb-1">
+          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: isTop ? '1.4rem' : '1.05rem' }}>
+            {c.name}
+          </span>
+          {alignment !== undefined && (
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--primary)' }}>
+              {alignment}% match
+            </span>
+          )}
+        </div>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--muted-foreground)', marginBottom: '0.5rem' }}>
+          {c.govType} · {c.era}
+        </div>
+        <p style={{ fontFamily: 'var(--font-serif)', fontSize: isTop ? '0.9375rem' : '0.85rem', lineHeight: 1.6, color: 'var(--secondary-foreground)' }}>
+          {c.description}
+        </p>
+      </div>
+    </div>
+  )
+}
+
+function PoliticianCard({ p, alignment, isTop }: { p: (typeof politicians)[number]; alignment?: number; isTop?: boolean }) {
+  return (
+    <div className="flex flex-col sm:flex-row gap-5" style={isTop ? {} : { opacity: 0.85 }}>
+      <div
+        className="flex-shrink-0 overflow-hidden rounded-full"
+        style={{ border: '1px solid var(--border)', width: isTop ? '110px' : '72px', height: isTop ? '110px' : '72px' }}
+      >
+        <Emblem colors={p.colors} pattern={p.pattern} title={p.name} className="w-full h-full" />
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center justify-between gap-3 flex-wrap mb-1">
+          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: isTop ? '1.4rem' : '1.05rem' }}>
+            {p.name}
+          </span>
+          {alignment !== undefined && (
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--primary)' }}>
+              {alignment}% match
+            </span>
+          )}
+        </div>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--muted-foreground)', marginBottom: '0.5rem' }}>
+          {p.title} · {p.era}
+        </div>
+        <p style={{ fontFamily: 'var(--font-serif)', fontSize: isTop ? '0.9375rem' : '0.85rem', lineHeight: 1.6, color: 'var(--secondary-foreground)' }}>
+          {p.description}
+        </p>
+      </div>
+    </div>
+  )
+}
+
+function PoliticianNationResult({ scores }: { scores: Record<string, number> }) {
+  const x = scores.econ ?? 0
+  const y = scores.auth ?? 0
+
+  const rankedCountries = partyProximity(x, y, countries)
+  const rankedPoliticians = partyProximity(x, y, politicians)
+  const topCountry = rankedCountries[0]
+  const topPolitician = rankedPoliticians[0]
+  const runnerUpCountries = rankedCountries.slice(1, 3)
+  const runnerUpPoliticians = rankedPoliticians.slice(1, 3)
+
+  return (
+    <div className="flex flex-col gap-12 max-w-3xl">
+      <div>
+        <SectionLabel>Most compatible country</SectionLabel>
+        <CountryCard c={topCountry} alignment={topCountry.alignment} isTop />
+        {runnerUpCountries.length > 0 && (
+          <div className="mt-8 pt-6 border-t border-[var(--border)] flex flex-col gap-6">
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--muted-foreground)' }}>
+              Runners-up
+            </span>
+            {runnerUpCountries.map((c) => (
+              <CountryCard key={c.name} c={c} alignment={c.alignment} />
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div>
+        <SectionLabel>Most compatible politician</SectionLabel>
+        <PoliticianCard p={topPolitician} alignment={topPolitician.alignment} isTop />
+        {runnerUpPoliticians.length > 0 && (
+          <div className="mt-8 pt-6 border-t border-[var(--border)] flex flex-col gap-6">
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--muted-foreground)' }}>
+              Runners-up
+            </span>
+            {runnerUpPoliticians.map((p) => (
+              <PoliticianCard key={p.name} p={p} alignment={p.alignment} />
+            ))}
+          </div>
+        )}
+      </div>
+
+      <p className="pl-4" style={{ borderLeft: '2px solid var(--border)', fontFamily: 'var(--font-serif)', fontSize: '0.875rem', lineHeight: 1.65, color: 'var(--muted-foreground)' }}>
+        Matches are based on proximity on the same economic/authority map used elsewhere on this site. Descriptions summarize widely known facts and are not endorsements — historical figures and states are complicated, and no single quiz can capture that.
+      </p>
+    </div>
+  )
+}
+
 function ShareButton({ testName, scores }: { testName: string; scores: Record<string, number> }) {
   const [copied, setCopied] = useState(false)
 
@@ -434,6 +545,7 @@ export default function Results({ testId, testName, scores, resultType, onRetake
         {resultType === 'vote-compass' && <VoteCompassResult scores={scores} />}
         {resultType === 'axes' && testId === '12axes' && <TwelveAxesResult scores={scores} />}
         {resultType === 'axes' && testId === 'neovalues' && <NeoValuesResult scores={scores} />}
+        {resultType === 'dual-match' && <PoliticianNationResult scores={scores} />}
       </main>
     </div>
   )

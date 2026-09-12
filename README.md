@@ -1,6 +1,6 @@
 # Political Compass Hub
 
-A single site with five political and philosophical self-assessment tests — Political Compass, Vote Compass, 12 Axes, NeoValues, and PhiloSorter — each scored (or branched) client-side against a database of 12 political parties, 47 ideological traditions, 36 NeoValues archetypes, and 96 philosophical schools. Nothing is sent to a server; every test runs entirely in the browser.
+A single site with six political and philosophical self-assessment tests — Political Compass, Vote Compass, 12 Axes, NeoValues, PhiloSorter, and Politician & Nation — each scored (or branched, or matched) client-side against a database of 12 political parties, 47 ideological traditions, 37 NeoValues archetypes, 96 philosophical schools, 45 historical/modern countries, and 60 politicians. Nothing is sent to a server; every test runs entirely in the browser.
 
 Built with React 19, TypeScript, Vite, and Tailwind CSS 4.
 
@@ -93,6 +93,8 @@ src/PhilosorterRunner.tsx    PhiloSorter: branching flowchart quiz (home → qui
 src/PhilosorterEmblem.tsx    Generative SVG "emblem" for each philosophical school
 src/philosorterPhilosophies.ts  The 96 philosophical schools (quote, thinker, blurb, colors)
 src/philosorterQuiz.ts        The branching question tree PhiloSorter walks through
+src/politicianNationData.ts   Countries, politicians, and questions for Politician & Nation
+src/Emblem.tsx                 Shared re-export of the emblem renderer (used by both PhiloSorter and Politician & Nation)
 ```
 
 ## Adding or editing content
@@ -102,4 +104,5 @@ src/philosorterQuiz.ts        The branching question tree PhiloSorter walks thro
 - **Ideology database:** edit `ideologyPositions` in `src/data.ts` — used to find the closest ideological match on the Political Compass test.
 - **NeoValues archetypes:** edit `neoValuesArchetypes` in `src/data.ts` — each has a 5-axis target vector, a color, and a `lucide-react` icon key (see `ArchetypeIcon.tsx`).
 - **PhiloSorter schools/questions:** edit `philosophies` in `src/philosorterPhilosophies.ts` and the question tree in `src/philosorterQuiz.ts` — each `r:<name>` leaf in the question tree must match a key in `philosophies` exactly.
+- **Politician & Nation:** edit `countries`, `politicians`, and `politicianNationQuestions` in `src/politicianNationData.ts`. Both `countries` and `politicians` use the same `x`/`y` economic/authority scale as the Political Compass, so they can be scored with the same `scoreAxes` and matched with the same `partyProximity` helper.
 - **New test:** add an entry to `TESTS` in `src/data.ts`, a question array, and wire it up in `getQuestions()` in `src/App.tsx`.
