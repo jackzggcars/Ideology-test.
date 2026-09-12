@@ -90,24 +90,7 @@ export default function TestRunner({ testName, questions, onComplete, onBack }: 
       </div>
 
       <header className="border-b border-[var(--border)] px-6 md:px-10 py-4 flex items-center justify-between gap-3">
-        <button
-          onClick={handleBack}
-          className="flex items-center gap-2 transition-colors duration-150"
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.65rem',
-            letterSpacing: '0.02em',
-            color: 'var(--muted-foreground)',
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--foreground)')}
-          onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted-foreground)')}
-        >
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <path d="M8 5H2M5 2L2 5l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
-          </svg>
-          Back
-        </button>
-        <div className="hidden sm:block" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1rem', letterSpacing: '0.015em' }}>
+        <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1rem', letterSpacing: '0.015em' }}>
           {testName}
         </div>
         <div className="flex items-center gap-3">
@@ -212,34 +195,56 @@ export default function TestRunner({ testName, questions, onComplete, onBack }: 
           </div>
 
           {/* Nav */}
-          <div className="w-full flex items-center justify-between mt-8">
-            <span
-              className="hidden sm:inline"
+          <div className="w-full mt-8">
+            <div className="flex items-center justify-between">
+              <button
+                onClick={handleBack}
+                className="flex items-center gap-3 transition-colors duration-150"
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontWeight: 600,
+                  fontSize: '0.9rem',
+                  padding: '10px 24px',
+                  border: '1px solid var(--border)',
+                  color: 'var(--muted-foreground)',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--foreground)'; e.currentTarget.style.color = 'var(--foreground)' }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted-foreground)' }}
+              >
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M10 6H2M6 2L2 6l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
+                </svg>
+                Back
+              </button>
+
+              <button
+                onClick={handleNext}
+                disabled={selected === null}
+                className="flex items-center gap-3 transition-colors duration-150"
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontWeight: 600,
+                  fontSize: '0.9rem',
+                  padding: '10px 24px',
+                  border: '1px solid',
+                  borderColor: selected !== null ? 'var(--primary)' : 'var(--border)',
+                  color: selected !== null ? 'var(--primary-foreground)' : 'var(--muted-foreground)',
+                  backgroundColor: selected !== null ? 'var(--primary)' : 'transparent',
+                  cursor: selected !== null ? 'pointer' : 'not-allowed',
+                }}
+              >
+                {isLast ? 'See results' : 'Next'}
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
+                </svg>
+              </button>
+            </div>
+            <div
+              className="hidden sm:block text-center mt-4"
               style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', letterSpacing: '0.015em', color: 'var(--muted-foreground)' }}
             >
               Tip: press 1–5 to answer, enter to continue
-            </span>
-            <button
-              onClick={handleNext}
-              disabled={selected === null}
-              className="flex items-center gap-3 transition-colors duration-150 ml-auto"
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontWeight: 600,
-                fontSize: '0.9rem',
-                padding: '10px 24px',
-                border: '1px solid',
-                borderColor: selected !== null ? 'var(--primary)' : 'var(--border)',
-                color: selected !== null ? 'var(--primary-foreground)' : 'var(--muted-foreground)',
-                backgroundColor: selected !== null ? 'var(--primary)' : 'transparent',
-                cursor: selected !== null ? 'pointer' : 'not-allowed',
-              }}
-            >
-              {isLast ? 'See results' : 'Next'}
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
-              </svg>
-            </button>
+            </div>
           </div>
         </div>
       </main>
